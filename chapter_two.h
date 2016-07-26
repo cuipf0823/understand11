@@ -79,10 +79,34 @@ void NoBlockThrow()
 
 //C++11 noexecpt修饰的函数抛出异常，编译器可以选择直接使用std::terminate()函数来终止程序的运行；
 //这比基于异常处理机制的throw在效率上高一些
+
+//void excpt_func() noexcept(常量表达式) 常量表达式 == true表示不会抛出异常 ==false抛出异常
 void BlockThrow() noexcept
 {
-	Throw();
+	//Throw();
 }
+
+/*
+*  处于安全 C++11标准中析构默认是noexcept(ture),可以阻止异常的扩散 
+*/
+struct A
+{
+	~A() { throw 1;  }
+};
+
+struct B
+{
+	~B() noexcept(false) { throw 2; }
+};
+
+struct C
+{
+	B b;
+};
+
+int funA() { A a; }
+int funB() { B b; }
+int funC() { C c; }
 
 int test_except()
 {
@@ -111,7 +135,38 @@ int test_except()
 	{
 		cout << "Found throw 1. " << endl;
 	}
+
+	try
+	{
+		funB();
+	}
+	catch (...)
+	{
+		cout << "caught funB" << endl;
+	}
+
+	try
+	{
+		funC();
+	}
+	catch (...)
+	{
+		cout << "caught funC" << endl;
+	}
+
+	//不抛出异常，阻止了异常的扩散
+	try
+	{
+		funA();
+	}
+	catch (...)
+	{
+		cout << "caught funA" << endl;
+	}
 }
+
+/*
+*/
 
 void chapter_two()
 {
