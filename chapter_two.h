@@ -63,12 +63,64 @@ enum FeatureSupports
 #define assert_static(e) \
 do\
 {\
-	enum {assert_static_ = 1 / e; }; \
+	enum { assert_static__ = 1 / (e) };  \
 }while (0)
+
+
+/*
+*  异常处理
+*/
+void Throw() { throw 1; }
+
+void NoBlockThrow()
+{
+	Throw();
+}
+
+//C++11 noexecpt修饰的函数抛出异常，编译器可以选择直接使用std::terminate()函数来终止程序的运行；
+//这比基于异常处理机制的throw在效率上高一些
+void BlockThrow() noexcept
+{
+	Throw();
+}
+
+int test_except()
+{
+	try
+	{
+		Throw();
+	}
+	catch (...)
+	{		
+		cout << "Found Throw." << endl;
+	}
+
+	try
+	{
+		NoBlockThrow();
+	}
+	catch (...)
+	{
+		cout << "Throw is not blocked" << endl;
+	}
+	try
+	{
+		BlockThrow();
+	}
+	catch (...)
+	{
+		cout << "Found throw 1. " << endl;
+	}
+}
 
 void chapter_two()
 {
-	static_assert((SMAX - 2) == (C99 | ExtInt | SAssert | NoExcept));
-	assert_static((SMAX - 2) == (C99 | ExtInt | SAssert | NoExcept));
+	assert((SMAX - 1) == (C99 | ExtInt | SAssert | NoExcept));
+	assert_static((SMAX - 1) == (C99 | ExtInt | SAssert | NoExcept));
+	//C++11 中引入了static_assert 接收两个参数，一个是断言表达是返回bool值，一个是警告信息
+	int a = 0;
+	int b = 0;
+	static_assert(sizeof(a) == sizeof(b), "the parameters should have same width");
 	macro();
+	test_except();
 }
