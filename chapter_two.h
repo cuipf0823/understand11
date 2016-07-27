@@ -155,9 +155,10 @@ int test_except()
 	}
 
 	//不抛出异常，阻止了异常的扩散
+
 	try
 	{
-		funA();
+//		funA();
 	}
 	catch (...)
 	{
@@ -166,8 +167,63 @@ int test_except()
 }
 
 /*
+*  C++11中变量的初始化
+*/
+struct Init
+{
+	int a = 1;
+	double b{ 1.2 };
+	//std::string str1("abc");  //编译不通过
+};
+
+/*
+*	非静态成员的sizeof
 */
 
+struct People
+{
+public:
+	int hand;
+	static People* all;
+};
+
+void test_size_of()
+{
+	People p;
+	cout << sizeof(p.hand) << endl;	       //C++98 通过 C++11 通过
+	cout << sizeof(People::all) << endl;   //C++98 通过 C++11 通过
+	cout << sizeof(People::hand) << endl;  //C++98 错误 C++11 通过
+	cout << sizeof(((People*)0)->hand) << endl; //C++98中获取没有类实例类的非静态成员大小的方法
+}
+
+/*
+*	friend的扩展使用
+*/
+
+class FriendTest;
+typedef FriendTest FT;
+class Expend1
+{
+	friend class FriendTest;    //C++98 通过 C++11 通过
+};
+class Expend2
+{
+	friend FriendTest;	        //C++98 失败 C++11 通过
+};
+class Expend3
+{
+	friend FT;				    //C++98 失败 C++11 通过
+};
+//friend可以为类模板声明友元
+template <typename T>
+class Expend4
+{
+	friend T;
+};
+
+Expend4<FriendTest> ef;		   //类型FriendTest在这里是Expend4的友元
+Expend4<int> pi;			   //int类型模板参数，友元声明被忽略
+ 
 void chapter_two()
 {
 	assert((SMAX - 1) == (C99 | ExtInt | SAssert | NoExcept));
@@ -178,4 +234,5 @@ void chapter_two()
 	static_assert(sizeof(a) == sizeof(b), "the parameters should have same width");
 	macro();
 	test_except();
+	test_size_of();
 }
