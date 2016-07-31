@@ -4,7 +4,7 @@
 #include <assert.h>
 using namespace std;
 
-struct TestMacro 
+struct TestMacro
 {
 	TestMacro() : name(__func__)
 	{
@@ -87,7 +87,7 @@ void BlockThrow() noexcept
 }
 
 /*
-*  处于安全 C++11标准中析构默认是noexcept(ture),可以阻止异常的扩散 
+*  处于安全 C++11标准中析构默认是noexcept(ture),可以阻止异常的扩散
 */
 struct A
 {
@@ -115,7 +115,7 @@ int test_except()
 		Throw();
 	}
 	catch (...)
-	{		
+	{
 		cout << "Found Throw." << endl;
 	}
 
@@ -223,7 +223,7 @@ class Expend4
 
 Expend4<FriendTest> ef;		   //类型FriendTest在这里是Expend4的友元
 Expend4<int> pi;			   //int类型模板参数，友元声明被忽略
- 
+
 /*
 *	c++11中final和override的使用
 */
@@ -236,12 +236,12 @@ public:
 
 class Base : public Object
 {
-	virtual void func() final;  
+	virtual void func() final;
 };
 
 class Derived : public Base
 {
-//	void func(); //无法通过编译        
+//	void func(); //无法通过编译
 };
 
 struct Base1
@@ -254,14 +254,14 @@ struct DerivedMid: public Base1
 {
 	void Turing() override;	     //
 //	void VNeumann() override;	 //无法通过编译 参数不一样
-	void VNeumann(int g) override; 
+	void VNeumann(int g) override;
 };
 
 /*
 *	模板函数的默认模板参数
 */
 
-template<typename T1, typename T2 = int> 
+template<typename T1, typename T2 = int>
 class DefClass1;
 /*
 template<typename T1 = int, typename T2>
@@ -273,11 +273,36 @@ class DefClass3;
 template<int i = 0, typename T>
 class DefClass4;				           //编译错误
 */
-template<typename T1 = int, typename T2> 
+template<typename T1 = int, typename T2>
 void DefFunc(T1 a, T2 b);
 template<int i = 0, typename T>
 void DefFunc(T a);
 
+/*
+	局部和匿名类型作模板实参
+*/
+
+template <typename T>
+class X { };
+template <typename T>
+void TempFun(T t){};
+struct A{ } a;
+struct {int i;} b;           //b为匿名类型变量
+typedef struct {int i; } B;  //B为匿名类型
+
+void test_template()
+{
+	struct C
+	{
+
+	} c;
+	X<A> x1;		//C++98 通过 C++11通过
+	X<B> x2;		//C++98 错误 C++11通过
+	X<C> x3;		//C++98 错误 C++11通过
+	TempFun(a);		//C++98 通过 C++11通过
+	TempFun(b);		//C++98 错误 C++11通过
+	TempFun(c);		//C++98 错误 C++11通过
+}
 
 void chapter_two()
 {
