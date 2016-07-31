@@ -3,6 +3,8 @@
 #include <limits.h>
 #include <assert.h>
 using namespace std;
+namespace NameTwo
+{
 
 struct TestMacro
 {
@@ -315,4 +317,6 @@ void chapter_two()
 	macro();
 	test_except();
 	test_size_of();
+}
+
 }
