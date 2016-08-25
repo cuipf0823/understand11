@@ -4,6 +4,7 @@
 #include <assert.h>
 using namespace std;
 
+<<<<<<< HEAD
 namespace three
 {
 //派生类使用基类成员函数方式
@@ -20,11 +21,36 @@ class Derived : public Base
 public:
 	using Base::f;
 	void f(int i)
+=======
+namespace NameThree
+{
+
+/*
+	继承构造函数
+*/
+
+class Base
+{
+public:
+	void func(double f)
+	{
+		cout << "Base: " << f << endl;
+	}
+};
+
+//派生类即存在结构double类型的func又存在接受int类型的
+class Derived : public Base
+{
+public:
+	using Base::func;
+	void func(int i)
+>>>>>>> 5e55f846aacfa6169bda814fae7451a9d363e617
 	{
 		cout << "Derived: " << i << endl;
 	}
 };
 
+<<<<<<< HEAD
 
 
 //移动语义
@@ -92,3 +118,21 @@ void TestChaperThree()
 }
 
 }
+=======
+void test_construct()
+{
+	Base b;
+	b.func(4.52);
+
+	Derived d;
+	d.func(4.59);
+	d.func(145);
+};
+
+void chapter_three()
+{
+	test_construct();
+}
+
+}
+>>>>>>> 5e55f846aacfa6169bda814fae7451a9d363e617
