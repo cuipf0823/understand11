@@ -284,13 +284,17 @@ void DefFunc(T a);
 	局部和匿名类型作模板实参
 */
 
+/*
 template <typename T>
 class X { };
 template <typename T>
 void TempFun(T t){};
+
 struct A{ } a;
-struct {int i;} b;           //b为匿名类型变量
+struct {int i;} b; //b为匿名类型变量   
+
 typedef struct {int i; } B;  //B为匿名类型
+
 
 void test_template()
 {
@@ -305,6 +309,7 @@ void test_template()
 	TempFun(b);		//C++98 错误 C++11通过
 	TempFun(c);		//C++98 错误 C++11通过
 }
+*/
 
 void chapter_two()
 {
