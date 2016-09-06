@@ -210,6 +210,87 @@ vector<int> d_vector = { 1, 2, 3 };
 map<int, float> e_map {{1, 1.2}, { 1, 2.3 }, { 3, 3.6 }};
 map<int, float> f_map = { { 1, 1.2 }, { 1, 2.3 }, { 3, 3.6 } };
 
+enum Gener
+{
+	boy,
+	girl
+};
+
+class people
+{
+public:
+	people(initializer_list<pair<std::string, Gener> > var_list)
+	{
+		auto i = var_list.begin();
+		for (; i != var_list.end(); ++i)
+		{
+			data.push_back(*i);
+		}
+	}
+private:
+	vector<pair<string, Gener> > data;
+};
+
+void FunInit(initializer_list<int> iv)
+{
+
+}
+
+class InitListData
+{
+public:
+	InitListData& operator [] (initializer_list<int> l)
+	{
+		for (auto i = l.begin(); i != l.end(); ++i)
+		{
+			idx.push_back(*i);
+		}
+		return *this;
+	}
+
+	InitListData& operator = (int v)
+	{
+		if (idx.empty() != true)
+		{
+			for (auto i = idx.begin(); i != idx.end(); ++i)
+			{
+				d.resize((*i > d.size()) ? *i : d.size());
+				d[*i - 1] = v;
+			}
+			idx.clear();
+		}
+	}
+
+	void Print()
+	{
+		for (auto i = d.begin(); i != d.end(); ++i)
+		{
+			cout << *i << " ";
+		}
+		cout << endl;
+	}
+private:
+	vector<int> idx;
+	vector<int> d;   
+};
+
+void TestInitData()
+{
+	InitListData init_d;
+	init_d[{2, 3, 5}] = 7;
+	init_d[{1, 4, 6, 8}] = 8;
+	init_d.Print();
+}
+
+vector<int> GetVector()
+{
+	return { 1, 2 };
+}
+/*const*/ vector<int>& GetVectorRef()
+{
+	return { 3, 5 };
+}
+
 void TestChaperThree()
 {
 	Base b;
@@ -244,6 +325,12 @@ void TestChaperThree()
 	//ConvertTo ct2 = c;			//拷贝构造初始化 编译失败
 	ConvertTo ct3 = static_cast<ConvertTo>(c); //直接强制转换
 	//FunCon(c);	                    //拷贝构造初始化失败
+
+
+	people name_12 = { { "tom", boy }, { "lily", girl }, { "kuku", boy } };
+	FunInit({ 1, 2 });
+	FunInit({});       //空列表
+	TestInitData();
 }
 
 
