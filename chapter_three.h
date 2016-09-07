@@ -286,9 +286,86 @@ vector<int> GetVector()
 {
 	return { 1, 2 };
 }
-/*const*/ vector<int>& GetVectorRef()
+/*
+const vector<int>& GetVectorRef()
 {
 	return { 3, 5 };
+}
+*/
+
+
+//用户自定义字面量
+typedef unsigned char uint8;
+struct RGBA
+{
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
+	RGBA(uint8 R, uint8 G, uint8 B, uint8 A = 0):
+		r(R),
+		g(G),
+		b(B),
+		a(A)
+	{
+
+	}
+
+};
+
+std::ostream& operator << (std::ostream & out, RGBA & col)
+{
+	return out << "r: " << (int)col.r << " g: " << (int)col.g << " b: " << (int)col.b << " a: " << (int)col.a << endl;
+}
+
+RGBA operator "" _C(const char* col, size_t n)
+{
+	//一个长度为n的字符串col
+	const char* p = col;
+	const char* end = col + n;
+	const char *r, *g, *b, *a;
+	r = g = b = a = nullptr;
+	for (; p != end; ++p)
+	{
+		if (*p == 'r')
+		{
+			r = p;
+		}
+		else if (*p == 'g')
+		{
+			g = p;
+		}
+		else if (*p == 'b')
+		{
+			b = p;
+		}
+		else if (*p == 'a')
+		{
+			a = p;
+		}
+	}
+	if ((r == nullptr) || (g == nullptr) || (b == nullptr))
+	{
+		throw;
+	}
+	else if (a == nullptr)
+	{
+		return RGBA(atoi(r + 1), atoi(g + 1), atoi(b + 1));
+	}
+	else
+	{
+		return RGBA(atoi(r + 1), atoi(g + 1), atoi(b + 1), atoi(a + 1));
+	}
+}
+
+void blend(RGBA& col1, RGBA& col2)
+{
+	cout << "blend " << endl << col1 << col2 << endl;
+}
+
+void blend1(RGBA&& col1, RGBA&& col2)
+{
+	cout << "blend1 " << endl << col1 << col2 << endl;
 }
 
 void TestChaperThree()
@@ -331,6 +408,13 @@ void TestChaperThree()
 	FunInit({ 1, 2 });
 	FunInit({});       //空列表
 	TestInitData();
+
+	///////////////////////////////////////////////
+	RGBA col1(25, 24, 15);
+	RGBA col2({ 15, 255, 10, 17 });
+	blend(col1, col2);
+
+	blend1("r255 g240 b155"_C, "r12 g255 b10 a7"_C);
 }
 
 
