@@ -368,6 +368,21 @@ void blend1(RGBA&& col1, RGBA&& col2)
 	cout << "blend1 " << endl << col1 << col2 << endl;
 }
 
+//使用using 定义别名
+using uint = unsigned int;
+typedef unsigned int UINT;
+
+
+std::vector<int> int_vec{ 1, 2, 3, 3, 9 };
+const std::vector<int>& GetIntVec()
+{
+	return int_vec;
+}
+
+//使用模板编程using语法比typedef更加灵活
+template<typename T>
+using MapString = std::map < T, std::string > ;
+
 void TestChaperThree()
 {
 	Base b;
@@ -415,6 +430,17 @@ void TestChaperThree()
 	blend(col1, col2);
 
 	blend1("r255 g240 b155"_C, "r12 g255 b10 a7"_C);
+
+	cout << is_same<uint, UINT>::value << endl;
+
+	for (auto& e: int_vec)
+	{
+		cout << e << endl;
+	}
+
+	MapString<int> numberString;
+	numberString[100] = "100";
+
 }
 
 
