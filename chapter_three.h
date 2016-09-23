@@ -440,6 +440,7 @@ void TestChaperThree()
 
 	MapString<int> numberString;
 	numberString[100] = "100";
+	cout << "============================" << endl;
 
 }
 
