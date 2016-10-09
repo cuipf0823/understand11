@@ -163,6 +163,8 @@ namespace Four
 			cout << e << endl;	 //e是解引用后的对象
 		}
 		cout << endl;
+
+		cout << "============================" << endl;
 	}
 
 
