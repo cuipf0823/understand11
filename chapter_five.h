@@ -88,6 +88,39 @@ namespace Five
 		return sum;
 	}
 
+
+
+	//变长参数模板
+	template<int...A>
+	class NonTypeTemplate
+	{
+
+	};
+	//实例化
+	NonTypeTemplate<1, 0, 3> vint;
+
+	//Args是一个模板参数包表示0个或者多个模板类型参数
+	//rest函数参数包 表示0个或者多个函数参数
+	template <typename T, typename... Args>
+	void foo(const T& t, const Args& ... rest)
+	{
+		std::cout << sizeof ...(Args) << endl;	  //参数类型的数目
+		std::cout << sizeof ...(rest) << endl;	  //函数参数的数目
+	}
+	
+	template<typename T>
+	ostream& print(ostream& os, const T& t)
+	{
+		return os << t;
+	}
+
+	template<typename T, typename ... Args>
+	ostream& print(ostream& os, const T& t, const Args& ... rest)
+	{
+		os << t << ", ";
+		return print(os, rest...);
+	}	
+
 	void TestChaperFive()
 	{
 		
@@ -115,6 +148,70 @@ namespace Five
 
 		constexpr Date PRCfound{ 1949, 10, 1 };
 		constexpr int foundmonth = PRCfound.GetMonth();
+
+
+		int i = 0;
+		double d = 3.14;
+		std::string s = "how now brown cow";
+		foo(i, s, 32, i);
+		foo(s, 42, "hi");
+		foo(d, s);
+		foo("hi");
+
+		print(std::cout, i, s, 32);
+
+		cout << endl;
+		cout << "*****************************************" << endl;
+	}
+
+
+
+
+	//变长函数模板实例
+	template<typename...Args>
+	void print_out(Args ... rest)
+	{
+		//非6参数偏特化版本默认assert
+		assert(false);
+	}
+
+	//转化为6个参数的版本
+	void print_out(int a1, int a2, int a3, int a4, int a5, int a6)
+	{
+		cout << a1 << ", " << a2 << ", " << a3 << "," << a4 << ", " << a5 << ", " << a6 << endl;
+	}
+
+	template<typename ... Args>
+	int Vaargs(Args...rest)
+	{
+		int size = sizeof...(rest);
+		switch (size)
+		{
+		case 0:
+			print_out(99, 99, 99, 99, 99, 99);
+			break;
+		case 1:
+			print_out(99, 99, rest..., 99, 99, 99);
+			break;
+		case 2:
+			print_out(rest..., 99, 99, 99, 99);
+			break;
+		case 3:
+			print_out(rest..., 99, 99, 99);
+			break;
+		default:
+			print_out(0, 0, 0, 0, 0, 0);
+			break;
+		}
+	}
+
+	void TestChaperFive1()
+	{
+		Vaargs();
+		Vaargs(1);
+		Vaargs(1, 2);
+		Vaargs(1, 2, 3);
+		Vaargs(1, 2, 3, 4);
 	}
 
 }
