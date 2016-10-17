@@ -9,6 +9,7 @@
 #include <initializer_list>
 #include <memory>
 #include <stdarg.h>
+#include <stdlib.h>
 using namespace std;
 namespace Five
 {
@@ -205,6 +206,8 @@ namespace Five
 		}
 	}
 
+	void TestChaperFive2();
+
 	void TestChaperFive1()
 	{
 		Vaargs();
@@ -212,6 +215,88 @@ namespace Five
 		Vaargs(1, 2);
 		Vaargs(1, 2, 3);
 		Vaargs(1, 2, 3, 4);
+		typedef int* INTPTR;
+		INTPTR a = new int(8);
+		cout << *a << endl;
+
+		TestChaperFive2();
+	}
+
+	template <typename T>
+	class TestTraits
+	{
+	public:
+		typedef	T value_type;     //内嵌类型声明
+		TestTraits(T* p = nullptr) : ptr(p)
+		{
+
+		}
+		T& operator*() const
+		{
+			return *ptr;
+		}
+	private:
+		T* ptr;
+	};
+
+	template<typename T>
+	typename T::value_type func(T it)
+	{
+		return *it;
+	}
+
+	class TestNew
+	{
+	public:
+		TestNew(int b)
+		{
+			a = b;
+			cout << "construct" << endl;
+		}
+	private:
+		int a;
+	};
+
+	void TestChaperFive2()
+	{
+		TestTraits<int> ite(new int(8));
+		cout << func(ite) << endl;
+		int att = 10;
+		TestTraits<int*> pte(new (int*)(&att));
+		cout << func(pte) << endl;
+
+		TestTraits<int*>::value_type ac;
+
+		//关于右值
+		int rr0 = 34;
+		int &&rr1 = 42;
+		int &rr2 = rr0;
+		int &&rr3 = std::move(rr2);
+		cout << rr2 << endl;
+
+		//关于new的使用
+		//1. 申请空间 调用构造函数
+		TestNew* p_new = new TestNew(9);
+
+		//2.仅仅赋值用，调用构造函数 
+		void* p_new1 = malloc(sizeof(TestNew));
+		::new (static_cast<void*>(p_new1)) TestNew(100);
+		free(p_new1);
+		
+		//3.仅仅用于申请空间
+		TestNew* start_free = static_cast<TestNew*>(::operator new(100));
+		delete start_free;
+
+		cout << size_t(-1) / sizeof(char) << endl;
+		cout << size_t(-1) << endl;
+
+		union Obj
+		{
+			union Obj* next;
+			char data[1];
+		};
+		cout << sizeof(Obj) << endl;
+
 	}
 
 }
