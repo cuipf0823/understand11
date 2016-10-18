@@ -257,6 +257,17 @@ namespace Five
 		int a;
 	};
 
+	template<typename...Args>
+	void Out(int n, Args&&... args)
+	{
+		cout << n << endl;
+	}
+	template<typename...Args>
+	void Emplace(Args&&... args)
+	{
+		Out(sizeof...(args), std::forward<Args>(args)...);
+	}
+
 	void TestChaperFive2()
 	{
 		TestTraits<int> ite(new int(8));
@@ -296,6 +307,8 @@ namespace Five
 			char data[1];
 		};
 		cout << sizeof(Obj) << endl;
+
+		Emplace(1, 2, 2, 2, 4, 4, 6);
 
 	}
 
