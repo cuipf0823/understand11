@@ -310,6 +310,51 @@ namespace Five
 
 		Emplace(1, 2, 2, 2, 4, 4, 6);
 
+		std::vector<int> ivect = { 1, 2, 3, 3, 67 };
+		cout << ivect.max_size() << endl;
+		cout << sizeof(nullptr) << endl;
+		cout << sizeof(nullptr_t) << endl;				
+		nullptr_t my_null;
+		cout << &my_null << endl;
+
+		//lambda
+		int girls = 2;
+		int boys = 3;
+		auto totalChild = [](int x, int y) -> int{ return x + y; };
+		cout << totalChild(girls, boys) << endl;
+		//最简单的lambda函数
+		[]{};
+		auto totalChild1 = [girls, &boys]() ->int{return girls + boys; };
+		cout << totalChild1() << endl;
+
+		//仿函数
+		struct Functor
+		{
+			int operator()(int x, int y)
+			{
+				return x + y;
+			}
+		};
+		Functor total;
+		cout << total(boys, girls) << endl;
+
+		int tx = 3;
+		int ty = 4;
+		float a = 4.0;
+		float b = 4.0;
+		int success = 0;
+		auto valid1 = [&]() -> bool
+		{
+			if (tx + ty > boys)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 	}
 
 }
