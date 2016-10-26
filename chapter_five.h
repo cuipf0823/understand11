@@ -273,6 +273,7 @@ namespace Five
 	template <typename Tp, typename Ref, typename Ptr>
 	struct TestOp
 	{
+		typedef size_t difference_type;
 		TestOp()
 		{
 			cur = nullptr;
@@ -304,8 +305,17 @@ namespace Five
 	inline bool operator==(const TestOp<_Tp, _RefL, _PtrL>& x, const TestOp<_Tp, _RefR, _PtrR>& y)
 	{
 		cout << "outside operator2" << endl;
+		return true;
+	}
+	//返回值前面的typename不能省去
+	template<typename _Tp, typename _RefL, typename _PtrL, typename _RefR, typename _PtrR>
+	inline typename TestOp<_Tp, _RefL, _PtrL>::difference_type operator-(const TestOp<_Tp, _RefL, _PtrL>& x, const TestOp<_Tp, _RefR, _PtrR>& y)
+	{
+		cout << "outside operator -" << endl;
 		return x.cur == y.cur;
 	}
+
+
 
 	void TestChaperFive2()
 	{
