@@ -10,6 +10,7 @@
 #include <memory>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <list>
 using namespace std;
 namespace Five
 {
@@ -268,6 +269,44 @@ namespace Five
 		Out(sizeof...(args), std::forward<Args>(args)...);
 	}
 
+	//Ä£°å
+	template <typename Tp, typename Ref, typename Ptr>
+	struct TestOp
+	{
+		TestOp()
+		{
+			cur = nullptr;
+		}
+		Tp* cur;
+		
+		inline bool operator==(const TestOp& __y)
+		{
+			cout << "inside operator1" << endl;
+			return this->cur == __y.cur;
+		}
+
+		template<typename _Tp, typename _RefR, typename _PtrR>
+		inline bool operator==(const TestOp<_Tp, _RefR, _PtrR>& __y)
+		{
+			cout << "inside operator2" << endl;
+			return this->cur == __y.cur;
+		}
+		
+	};
+	template<typename _Tp, typename _Ref, typename _Ptr>
+	inline bool operator==(const TestOp<_Tp, _Ref, _Ptr>& x, const TestOp<_Tp, _Ref, _Ptr>& y)
+	{
+		cout << "outside operator1" << endl;
+		return x.cur == y.cur;
+	}
+
+	template<typename _Tp, typename _RefL, typename _PtrL, typename _RefR, typename _PtrR>
+	inline bool operator==(const TestOp<_Tp, _RefL, _PtrL>& x, const TestOp<_Tp, _RefR, _PtrR>& y)
+	{
+		cout << "outside operator2" << endl;
+		return x.cur == y.cur;
+	}
+
 	void TestChaperFive2()
 	{
 		TestTraits<int> ite(new int(8));
@@ -353,8 +392,25 @@ namespace Five
 			{
 				return false;
 			}
+		};
+
+		std::list<int> ilist = { 1, 2, 3, 5 };
+		std::list<int>::iterator iter = ilist.end();
+		if (++iter == ilist.begin())
+		{
+			cout << "1111" << endl;
 		}
 
+		TestOp<int, int&, int*> it, it0;
+		TestOp<int, unsigned int&, unsigned int*> uit;
+		if (it == uit)
+		{
+			cout << "it == uit" << endl;
+		}
+		if (it == it0)
+		{
+			cout << "it == it0" << endl;
+		}
 	}
 
 }
