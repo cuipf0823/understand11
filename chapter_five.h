@@ -11,7 +11,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <list>
-using namespace std;
+#include <deque>
 namespace Five
 {
 	//C++11中 强类型枚举  
@@ -314,8 +314,6 @@ namespace Five
 		cout << "outside operator -" << endl;
 		return x.cur == y.cur;
 	}
-
-
 
 	void TestChaperFive2()
 	{
