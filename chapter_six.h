@@ -14,6 +14,7 @@
 #include <deque>
 #include <queue>
 #include <string.h>
+#include <set>
 
 
 namespace Six
@@ -44,6 +45,24 @@ int_ptr& GetIntPtr2()
 {
 	return g_var2;
 }
+
+void PrintIntIntSet(std::set<int>& m, char* pre) 
+{
+	std::set<int>::iterator it;
+	std::cout << pre;
+	for (it = m.begin(); it != m.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl;
+}
+
+struct Identify
+{
+	template<typename T>
+	T&& operator()(T&& x) const
+	{
+		return std::forward<T>(x);
+	}
+};
 
 void TestChaperSix()
 {
@@ -134,7 +153,25 @@ void TestChaperSix()
 
 	std::cout << "upper bound points to: ";
 	std::cout << ret.second->first << " => " << ret.second->second << '\n';
+
+	std::string x ;
+	bool comp = true;
+	x = (comp ? "11111" : "22222");
+	std::cout << x << std::endl;
+
+	std::set<int> iset;
+	iset.emplace(1);
+	iset.emplace(100);
+	iset.emplace(2);
+	iset.emplace(34);
+	PrintIntIntSet(iset, "iset:");
+	auto iret = iset.emplace(2);
+	if (!iret.second)
+	{
+		std::cout << "aready exist" << endl;
+	}
 }
+
 
 
 }
