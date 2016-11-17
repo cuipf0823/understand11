@@ -15,6 +15,7 @@
 #include <queue>
 #include <string.h>
 #include <set>
+#include <tuple>
 
 
 namespace Six
@@ -46,7 +47,7 @@ int_ptr& GetIntPtr2()
 	return g_var2;
 }
 
-void PrintIntIntSet(std::set<int>& m, char* pre) 
+void PrintIntIntSet(std::set<int>& m, const char* pre) 
 {
 	std::set<int>::iterator it;
 	std::cout << pre;
@@ -55,14 +56,11 @@ void PrintIntIntSet(std::set<int>& m, char* pre)
 	std::cout << std::endl;
 }
 
-struct Identify
+template<typename T>
+T&& TestIdentity(T&& t)
 {
-	template<typename T>
-	T&& operator()(T&& x) const
-	{
-		return std::forward<T>(x);
-	}
-};
+	return std::forward<T>(t);
+}
 
 void TestChaperSix()
 {
@@ -170,6 +168,38 @@ void TestChaperSix()
 	{
 		std::cout << "aready exist" << endl;
 	}
+	std::string str("66666");
+	std::string& str_lref = str;
+	std::string&& str_rref = std::move(str_lref);  //使用时候依然是 左值
+	std::string&& str_rref1 = std::move(str);
+	std::string&& str_rref2 = static_cast<std::string&&>(str); //等价于使用std::move
+	
+	std::string&& str2 = TestIdentity<std::string>(std::move(str));	 //T： string	传参数：右值引用	返回：右值引用
+	std::string& str3 = TestIdentity<std::string&>(str_lref);        //T:  string& 	传参数：左值引用（引用折叠）返回：左值引用
+	std::string&& str4 = TestIdentity<std::string&&>(std::move(str));//T:  string&&  传参数：右值引用 返回：右值引用 
+	std::string& str5 = TestIdentity(str4);							 //T:  string&  传参数：左值引用 返回：左值引用
+
+
+	//tuple的初始化
+	std::tuple<size_t, size_t, size_t> threeD; 
+	std::tuple<std::string, std::vector<double>, int, std::list<int>> someVal("constants", { 3.14, 2.78 }, 42, { 1, 2, 3, 4 });
+	//此时 item为 tuple<const char*, int, double>
+	auto item = std::make_tuple("0-999-123-x", 2, 20.12);
+
+	//成员tuple成员访问
+	auto book = std::get<0>(item);
+	auto cnt = std::get<1>(item);
+	auto price = std::get<2>(item);
+	std::cout << "book: " << book << " cnt: " << cnt << " price: " << price << std::endl;
+	//auto form = std::get<3>(item);
+
+	typedef decltype(item) Trans; //Trans 是item的类型；
+	//返回Trans类型对象中成员的数量
+	std::cout << std::tuple_size<Trans>::value << endl;
+	//获取类型 cnt类型与item中第二个成员相同
+	std::tuple_element<1, Trans>::type cnt_type = std::get<1>(item);
+
+	//使用tuple返回多个值
 }
 
 
