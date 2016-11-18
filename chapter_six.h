@@ -179,6 +179,9 @@ void TestChaperSix()
 	std::string&& str4 = TestIdentity<std::string&&>(std::move(str));//T:  string&&  传参数：右值引用 返回：右值引用 
 	std::string& str5 = TestIdentity(str4);							 //T:  string&  传参数：左值引用 返回：左值引用
 
+	/*
+		tuple的使用
+	*/
 
 	//tuple的初始化
 	std::tuple<size_t, size_t, size_t> threeD; 
@@ -198,10 +201,26 @@ void TestChaperSix()
 	std::cout << std::tuple_size<Trans>::value << endl;
 	//获取类型 cnt类型与item中第二个成员相同
 	std::tuple_element<1, Trans>::type cnt_type = std::get<1>(item);
+	//使用tuple返回多个值 tuple常见用途之一
 
-	//使用tuple返回多个值
+	//定义编译时期的常量
+	std::cout << "integal_constant: " << std::integral_constant<int, 5>::value << std::endl;
+	using one_type = std::integral_constant < int, 10 > ;
+	std::cout << one_type::value << endl;
+	struct OneType : std::integral_constant < int, 100 >
+	{
+
+	};
+	std::cout << OneType::value << endl;
+	//编译时期的true 和 false
+	using true_type = std::integral_constant < bool, true > ;
+	using false_type = std::integral_constant < bool, false > ;
+	std::cout << true_type::value << " " << false_type::value << endl;
+
+	using type1 = std::conditional<true, int, double>::type;
+	using type2 = std::conditional<false, int, double>::type;
+	std::cout << typeid(type1).name() << std::endl;
+	std::cout << typeid(type2).name() << std::endl;
+	std::cout << typeid(std::conditional<OneType::value >= one_type::value, float, int>::type).name() << endl;
 }
-
-
-
 }
