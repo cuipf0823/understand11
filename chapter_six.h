@@ -16,6 +16,7 @@
 #include <string.h>
 #include <set>
 #include <tuple>
+#include <boost/smart_ptr.hpp>
 
 
 namespace Six
@@ -222,5 +223,30 @@ void TestChaperSix()
 	std::cout << typeid(type1).name() << std::endl;
 	std::cout << typeid(type2).name() << std::endl;
 	std::cout << typeid(std::conditional<OneType::value >= one_type::value, float, int>::type).name() << endl;
+
+	typedef boost::shared_ptr<int> IntPtr;
+	std::set<IntPtr> b_sets;
+	IntPtr b_n(new int(10));
+	std::cout << b_n.use_count() << endl;
+	IntPtr b_n1(b_n);
+	std::cout << b_n1.use_count() << endl;
+	std::cout << b_n.use_count() << endl;
+	const IntPtr& b_n2 = b_n;
+	std::cout << b_n1.use_count() << endl;
+	std::cout << b_n.use_count() << endl;
+	b_sets.insert(b_n);
+	b_n1.reset();
+	std::cout << "____________________________" << endl;
+	std::cout << b_n.use_count() << endl;
+	std::cout << b_n1.use_count() << endl;
+	std::cout << b_n2.use_count() << endl;
+	b_n.reset();
+	std::cout << "____________________________" << endl;
+	std::cout << b_n.use_count() << endl;
+	std::cout << b_n1.use_count() << endl;
+	std::cout << b_n2.use_count() << endl;
+	//std::cout << b_sets.begin()->unique() << endl;
+	std::cout << b_sets.begin()->use_count() << endl;
+
 }
 }

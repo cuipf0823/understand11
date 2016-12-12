@@ -18,7 +18,8 @@ struct TestMacro
 /*
 *	变长参数宏的使用
 */
-#define log(...) { \
+#define LOG(...) \
+{ \
 	fprintf(stderr, "%s: line %d :", __FILE__, __LINE__);\
 	fprintf(stderr, __VA_ARGS__); \
 	fprintf(stderr, "\n"); \
@@ -39,7 +40,7 @@ void macro()
 	TestMacro tm;
 	cout << tm.name << endl;
 	int x = 3;
-	log("x = %d", x);
+	LOG("x = %d", x);
 
 	//long long类型
 	long long ll_min = LLONG_MIN;

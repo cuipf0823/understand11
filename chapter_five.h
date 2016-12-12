@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <list>
 #include <deque>
+#include <set>
 namespace Five
 {
 	//C++11中 强类型枚举  
@@ -107,7 +108,7 @@ namespace Five
 	void foo(const T& t, const Args& ... rest)
 	{
 		std::cout << sizeof ...(Args) << endl;	  //参数类型的数目
-		std::cout << sizeof ...(rest) << endl;	  //函数参数的数目
+		std::cout << sizeof ...(rest) << endl;	  //函数参数的数目			ss
 	}
 	
 	template<typename T>
@@ -418,6 +419,31 @@ namespace Five
 		if (it == it0)
 		{
 			cout << "it == it0" << endl;
+		}
+
+		int* p = new int(100);
+		int* q = new int(200);
+		typedef std::pair<int, int*> Entry;
+		std::set<Entry> sentry;
+		for (int e = 0; e < 10; ++e)
+		{
+			if (e % 2 == 0)
+			{
+				sentry.insert(Entry(e, p));
+			}
+			else
+			{
+				sentry.insert(Entry(e, q));
+			}
+		}
+		sentry.insert(Entry(20, p));
+		sentry.insert(Entry(30, p));
+		sentry.insert(Entry(40, q));
+		sentry.insert(Entry(40, p));
+		sentry.insert(Entry(40, reinterpret_cast<int*>(UINTPTR_MAX)));
+		for (const auto& it : sentry)
+		{
+			cout << it.first << "  " << it.second << endl;
 		}
 	}
 
