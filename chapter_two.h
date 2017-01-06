@@ -3,7 +3,7 @@
 #include <limits.h>
 #include <assert.h>
 using namespace std;
-namespace NameTwo
+namespace Two
 {
 
 struct TestMacro
@@ -311,6 +311,98 @@ void test_template()
 	TempFun(c);		//C++98 错误 C++11通过
 }
 */
+class FuncBase;
+class TestData
+{
+public:
+	int AddFunc(int a, int b, void(FuncBase::*func)(int* a, int *b), FuncBase* base);
+	int AddFuncClass(int a, int b, FuncBase* base);
+};
+
+int TestData::AddFunc(int a, int b, void (FuncBase::*func)(int* a, int *b), FuncBase* base)
+{
+	(base->*func)(&a, &b);
+	cout << "a + b = " << a + b << endl;
+}
+
+int TestData::AddFuncClass(int a, int b, FuncBase* base)
+{
+	//base->SendMsg(&a, &b);
+	cout << "a + b = " << a + b << endl;
+}
+
+class FuncBase
+{
+public:
+	void SendMsg(int* a, int* b);
+	int BaseAddFunc();
+private:
+	TestData data;
+};
+
+void FuncBase::SendMsg(int* a, int* b)
+{
+	cout << *a << "&&&&&&&&&&&&&&&&&&&&&&&&&" << *b << endl;
+}
+
+int FuncBase::BaseAddFunc()
+{
+	data.AddFunc(10, 20, &FuncBase::SendMsg, this);
+	data.AddFuncClass(10, 20, this);
+}
+
+//不包含任何缺省构造函数
+class EquipmentPiece
+{
+public:
+	EquipmentPiece(int idnum) :id_num_(idnum)
+	{
+	}
+	~EquipmentPiece()
+	{
+
+	}
+private:
+	int id_num_;
+};
+
+void TestEquipment()
+{
+	EquipmentPiece bestpieces[10]; 	  //失败 
+	EquipmentPiece* pieces = new EquipmentPiece[10]; //失败
+
+//解决方法1:使用非堆数组解决
+int id1 = 0;
+int id2 = 1;
+EquipmentPiece arry_pieces[2] = { EquipmentPiece(id1), EquipmentPiece(id2) };
+
+//解决方法2: 一个更加通用的解决方法，使用指针数组代替一个对象数组
+//缺点： 必须删除每个数组里每一个指针；增加了内存的使用量
+typedef EquipmentPiece* EquipmentPtr;
+EquipmentPtr pieces_ptr[10];
+EquipmentPtr* pieces_new = new EquipmentPtr[10];
+for (int i = 0; i < 10; ++i)
+{
+	pieces_new[i] = new EquipmentPtr(i);
+}
+
+//解决方法3：使用placement new方法；但是必须手动调用数组对象的析构函数
+void* rawmemory = operator new[](10 * sizeof(EquipmentPiece));
+EquipmentPiece* raw_pieces = static_cast<EquipmentPiece*>(rawmemory);
+for (int idx = 0; idx < 10; ++idx)
+{
+	::new (&raw_pieces[i]) EquipmentPiece(idx);
+}
+	
+for (int i = 9; i >= 0; --i)
+{
+	raw_pieces[i].~EquipmentPiece();
+}
+operator delete[](raw_pieces);
+
+}
+
+
 
 void chapter_two()
 {
@@ -323,6 +415,8 @@ void chapter_two()
 	macro();
 	test_except();
 	test_size_of();
+	FuncBase base;
+	base.BaseAddFunc();
 }
 
 }

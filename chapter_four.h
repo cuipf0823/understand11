@@ -164,6 +164,12 @@ namespace Four
 		}
 		cout << endl;
 
+		vector<unsigned int>* vec_ptr = &vec_for;
+		for (const auto& eee : *vec_ptr)
+		{
+			cout << "=====" <<eee << endl;
+		}
+
 		cout << "============================" << endl;
 	}
 
