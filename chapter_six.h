@@ -17,6 +17,7 @@
 #include <set>
 #include <tuple>
 #include <boost/smart_ptr.hpp>
+#include <unordered_map>
 
 
 namespace Six
@@ -62,6 +63,42 @@ T&& TestIdentity(T&& t)
 {
 	return std::forward<T>(t);
 }
+
+
+//²âÊÔunordered_mapÏà¹Ø²Ù×÷
+typedef std::unordered_map<int, int> HashMap;
+HashMap info_hash_map;
+std::map<int, int> info_map;
+void test_hash_map()
+{
+	for (int idx = 0; idx < 10; ++idx)
+	{
+		info_hash_map[idx] = idx;
+		info_map[idx] = idx;
+	}
+
+	auto iter = info_hash_map.find(9);
+	auto iter_map = info_map.find(5);
+	if (iter != info_hash_map.end() && iter_map != info_map.end())
+	{
+		cout << iter->first << "------" << iter->second << endl;
+		cout << iter_map->first << "------" << iter_map->second << endl;
+	}
+
+	for (int i = 20; i < 10000; ++i)
+	{
+		info_hash_map[i] = i;
+		info_map[i] = i;
+	}
+
+	if (iter != info_hash_map.end() && iter_map != info_map.end())
+	{
+		cout << iter->first << "------" << iter->second << endl;
+		cout << iter_map->first << "------" << iter_map->second << endl;
+	}
+
+}
+
 
 void TestChaperSix()
 {
@@ -247,6 +284,9 @@ void TestChaperSix()
 	std::cout << b_n2.use_count() << endl;
 	//std::cout << b_sets.begin()->unique() << endl;
 	std::cout << b_sets.begin()->use_count() << endl;
+
+
+	test_hash_map();
 
 }
 }

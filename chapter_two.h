@@ -368,8 +368,8 @@ private:
 
 void TestEquipment()
 {
-	EquipmentPiece bestpieces[10]; 	  //失败 
-	EquipmentPiece* pieces = new EquipmentPiece[10]; //失败
+//	EquipmentPiece bestpieces[10]; 	  //失败 
+//	EquipmentPiece* pieces = new EquipmentPiece[10]; //失败
 
 //解决方法1:使用非堆数组解决
 int id1 = 0;
@@ -383,7 +383,7 @@ EquipmentPtr pieces_ptr[10];
 EquipmentPtr* pieces_new = new EquipmentPtr[10];
 for (int i = 0; i < 10; ++i)
 {
-	pieces_new[i] = new EquipmentPtr(i);
+	pieces_new[i] = new EquipmentPiece(i);
 }
 
 //解决方法3：使用placement new方法；但是必须手动调用数组对象的析构函数
@@ -391,7 +391,7 @@ void* rawmemory = operator new[](10 * sizeof(EquipmentPiece));
 EquipmentPiece* raw_pieces = static_cast<EquipmentPiece*>(rawmemory);
 for (int idx = 0; idx < 10; ++idx)
 {
-	::new (&raw_pieces[i]) EquipmentPiece(idx);
+	::new (&raw_pieces[idx]) EquipmentPiece(idx);
 }
 	
 for (int i = 9; i >= 0; --i)
