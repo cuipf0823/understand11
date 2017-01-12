@@ -96,8 +96,95 @@ void test_hash_map()
 		cout << iter->first << "------" << iter->second << endl;
 		cout << iter_map->first << "------" << iter_map->second << endl;
 	}
-
 }
+
+struct MutexInfo;
+typedef std::list<MutexInfo> MutexInfoList;
+typedef std::unordered_map<uint32_t, MutexInfoList::iterator> MutexPair;
+typedef std::unordered_map<uint32_t, MutexPair> MutexTuple;
+struct MutexInfo 
+{
+	uint32_t scene_id;
+	uint32_t mutex_id;
+	uint32_t uid;
+	MutexTuple::iterator iter1;
+	MutexTuple::iterator iter2;
+};
+
+//user scene iterator
+MutexTuple user_scene_;
+//scene mutex iterator
+MutexTuple scene_mutex_;
+
+MutexInfoList mutexs_;
+
+void test_mutex()
+{
+	//init 知道 uid scene_id, mutex_id
+	uint32_t uid = 100999;
+	uint32_t scene_id = 2;
+	uint32_t mutex_id = 1;
+	MutexInfo info;
+	info.uid = uid;
+	info.scene_id = scene_id;
+	info.mutex_id = mutex_id;
+	mutexs_.push_front(info);
+	
+	MutexInfoList::iterator iter = mutexs_.begin();
+
+	MutexPair scene_pair = { {scene_id, iter} };
+	user_scene_[uid] = scene_pair;
+
+	MutexPair mutex_pair = { { mutex_id, iter } };
+	scene_mutex_[scene_id] = mutex_pair;
+	iter->iter1 = user_scene_.begin();
+	iter->iter2 = scene_mutex_.begin();
+
+
+	//插入第二个元素
+	info.mutex_id = mutex_id + 100;
+	info.scene_id = scene_id + 100;
+	info.uid = uid + 100;
+	mutexs_.push_front(info);
+	iter = mutexs_.begin();
+
+	scene_pair.clear();
+	mutex_pair.clear();
+	scene_pair = { { info.scene_id, iter } };
+	mutex_pair = { { info.mutex_id, iter } };
+	user_scene_[info.uid] = scene_pair;
+	scene_mutex_[info.scene_id] = mutex_pair;
+	iter->iter2 = scene_mutex_.find(info.scene_id);
+	iter->iter1 = user_scene_.find(info.uid);
+
+	cout << " user_scene_: " << endl;
+	for (auto& aiter : user_scene_)
+	{
+		MutexPair& mutex_pair = aiter.second;
+		cout << "first: " << aiter.first << " second: " << mutex_pair.begin()->first << endl;
+		MutexInfoList::iterator list_iter = mutex_pair.begin()->second;
+		cout << "mutex_id: " << list_iter->mutex_id << endl;
+	}
+
+	//删除元素
+	MutexTuple::iterator it = user_scene_.find(uid);
+	auto list_iter = it->second.begin()->second;
+	user_scene_.erase(list_iter->iter1);
+	scene_mutex_.erase(list_iter->iter2);
+	mutexs_.erase(list_iter);
+
+	cout << " after del user_scene_: " << endl;
+	for (auto& aiter : user_scene_)
+	{
+		MutexPair& mutex_pair = aiter.second;
+		cout << "first: " << aiter.first << " second: " << mutex_pair.begin()->first << endl;
+		MutexInfoList::iterator list_iter = mutex_pair.begin()->second;
+		cout << "mutex_id: " << list_iter->mutex_id << endl;
+	}
+
+	cout << "mutexs list: " << mutexs_.size() << endl; 
+}
+
 
 
 void TestChaperSix()
@@ -287,6 +374,7 @@ void TestChaperSix()
 
 
 	test_hash_map();
+	test_mutex();
 
 }
 }
