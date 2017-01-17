@@ -183,6 +183,26 @@ void test_mutex()
 	}
 
 	cout << "mutexs list: " << mutexs_.size() << endl; 
+
+
+	std::map<uint32_t, uint32_t> test_maps;
+	for (int idx = 0; idx < 15; ++idx)
+	{
+		test_maps[idx] = idx;
+	}
+
+	for (auto& it : test_maps)
+	{
+		if (it.first % 2 ==0)
+		{
+			auto iter = test_maps.find(it.first);
+			if (iter != test_maps.end())
+			{
+				test_maps.erase(iter);
+			}
+			cout << "test maps : " << it.first << " " << it.second << endl;
+		}
+	}
 }
 
 
