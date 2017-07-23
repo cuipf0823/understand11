@@ -10,7 +10,7 @@ using namespace std;
 
 namespace three
 {
-//ÅÉÉúÀàÊ¹ÓÃ»ùÀà³ÉÔ±º¯Êı·½Ê½
+//æ´¾ç”Ÿç±»ä½¿ç”¨åŸºç±»æˆå‘˜å‡½æ•°æ–¹å¼
 class Base
 {
 public:
@@ -31,7 +31,7 @@ public:
 
 
 
-//ÒÆ¶¯ÓïÒå
+//ç§»åŠ¨è¯­ä¹‰
 class HasPtrMem
 {
 public:
@@ -43,10 +43,10 @@ public:
 	{
 		cout << "Copy construct: " << ++n_cptr_ << endl;
 	}
-	//ÒÆ¶¯¹¹Ôìº¯Êı
+	//ç§»åŠ¨æ„é€ å‡½æ•°
 	HasPtrMem(HasPtrMem && h) : d_(h.d_)
 	{
-		h.d_ = nullptr;     //½«Êµ²Î´«µİ½øÀ´±äÁ¿µÄÖ¸Õë³ÉÔ±ÖÃ¿Õ
+		h.d_ = nullptr;     //å°†å®å‚ä¼ é€’è¿›æ¥å˜é‡çš„æŒ‡é’ˆæˆå‘˜ç½®ç©º
 		cout << "move construct: " << ++n_mvtr_ << endl;
 	}
 	~HasPtrMem()
@@ -80,7 +80,7 @@ HasPtrMem GetTempMove()
 	return h;
 }
 
-//ÓÒÖµÒıÓÃ
+//å³å€¼å¼•ç”¨
 class Moveable
 {
 public:
@@ -97,7 +97,7 @@ public:
 		i = new int(*o.i);
 		cout << "Copied" << endl;
 	}
-	//ÒÆ¶¯¹¹Ôìº¯Êı
+	//ç§»åŠ¨æ„é€ å‡½æ•°
 	Moveable(Moveable&& mo)
 	{
 		i = mo.i;
@@ -120,7 +120,7 @@ public:
 	{
 		delete[] c;
 	}
-	//ÒÆ¶¯¿½±´¹¹Ôìº¯Êı
+	//ç§»åŠ¨æ‹·è´æ„é€ å‡½æ•°
 	HugeMem(HugeMem && hm) : sz(hm.sz), c(hm.c)
 	{
 		hm.c = nullptr;
@@ -140,7 +140,7 @@ public:
 	{
 		delete i;
 	};
-	//Ç¿ÖÆ×ªÎªÓÒÖµ£¬ÒÔµ÷ÓÃÒÆ¶¯¹¹Ôìº¯Êı
+	//å¼ºåˆ¶è½¬ä¸ºå³å€¼ï¼Œä»¥è°ƒç”¨ç§»åŠ¨æ„é€ å‡½æ•°
 	Moveable2(Moveable2 && m) :i(m.i), h(move(m.h))
 	{
 		m.i = nullptr;
@@ -156,7 +156,7 @@ Moveable2 GetMoveable2Temp()
 	return tmp;
 }
 
-//forwardº¯ÊıµÄÊ¹ÓÃ
+//forwardå‡½æ•°çš„ä½¿ç”¨
 void Runcode(int && m)
 {
 	cout << "rvalue ref" << endl;
@@ -188,7 +188,7 @@ class ConvertTo
 class Convertable
 {
 public:
-	//ÏÔÊ¾×ª»»µ½converttoÀàĞÍÀàĞÍ×ª»»·û
+	//æ˜¾ç¤ºè½¬æ¢åˆ°converttoç±»å‹ç±»å‹è½¬æ¢ç¬¦
 	explicit operator ConvertTo () const
 	{
 		cout << "operator ()" << endl;
@@ -202,7 +202,7 @@ void FunCon(ConvertTo ct)
 }
 
 
-//ÁĞ±í³õÊ¼»¯
+//åˆ—è¡¨åˆå§‹åŒ–
 int a_list[] = { 1, 2, 3 };
 int b_list[] {1, 2, 4};
 vector<int> c_vector{ 1, 5, 6 };
@@ -294,7 +294,7 @@ const vector<int>& GetVectorRef()
 */
 
 
-//ÓÃ»§×Ô¶¨Òå×ÖÃæÁ¿
+//ç”¨æˆ·è‡ªå®šä¹‰å­—é¢é‡
 typedef unsigned char uint8;
 struct RGBA
 {
@@ -320,7 +320,7 @@ std::ostream& operator << (std::ostream & out, RGBA & col)
 
 RGBA operator "" _C(const char* col, size_t n)
 {
-	//Ò»¸ö³¤¶ÈÎªnµÄ×Ö·û´®col
+	//ä¸€ä¸ªé•¿åº¦ä¸ºnçš„å­—ç¬¦ä¸²col
 	const char* p = col;
 	const char* end = col + n;
 	const char *r, *g, *b, *a;
@@ -368,7 +368,7 @@ void blend1(RGBA&& col1, RGBA&& col2)
 	cout << "blend1 " << endl << col1 << col2 << endl;
 }
 
-//Ê¹ÓÃusing ¶¨Òå±ğÃû
+//ä½¿ç”¨using å®šä¹‰åˆ«å
 using uint = unsigned int;
 typedef unsigned int UINT;
 
@@ -379,7 +379,7 @@ const std::vector<int>& GetIntVec()
 	return int_vec;
 }
 
-//Ê¹ÓÃÄ£°å±à³ÌusingÓï·¨±Ètypedef¸ü¼ÓÁé»î
+//ä½¿ç”¨æ¨¡æ¿ç¼–ç¨‹usingè¯­æ³•æ¯”typedefæ›´åŠ çµæ´»
 template<typename T>
 using MapString = std::map < T, std::string > ;
 
@@ -397,8 +397,8 @@ void TestChaperThree()
 	cout << "Resource from " << __func__ << ":" << hex << mem_move.d_ << endl;
 
 // 	Moveable a;
-// 	Moveable c(move(a)); //»áµ÷ÓÃÒÆ¶¯¹¹Ôìº¯Êı
-// 	cout << *a.i << endl; //±àÒëÔËĞĞ´íÎó ´ËÊ±a.i±»ÖÃÎªNULL£¬µ«ÊÇaµÄÉùÃ÷ÖÜÆÚÒªµ½½áÊø
+// 	Moveable c(move(a)); //ä¼šè°ƒç”¨ç§»åŠ¨æ„é€ å‡½æ•°
+// 	cout << *a.i << endl; //ç¼–è¯‘è¿è¡Œé”™è¯¯ æ­¤æ—¶a.iè¢«ç½®ä¸ºNULLï¼Œä½†æ˜¯açš„å£°æ˜å‘¨æœŸè¦åˆ°ç»“æŸ
 
 	Moveable2 a(GetMoveable2Temp());
 	cout << hex << "Huge Mem from " << __func__ << " @" << a.h.c << endl;
@@ -413,15 +413,15 @@ void TestChaperThree()
 	PerfectForward(move(d));
 
 	Convertable c;
-	ConvertTo ct(c);				//Ö±½Ó³õÊ¼»¯
-	//ConvertTo ct2 = c;			//¿½±´¹¹Ôì³õÊ¼»¯ ±àÒëÊ§°Ü
-	ConvertTo ct3 = static_cast<ConvertTo>(c); //Ö±½ÓÇ¿ÖÆ×ª»»
-	//FunCon(c);	                    //¿½±´¹¹Ôì³õÊ¼»¯Ê§°Ü
+	ConvertTo ct(c);				//ç›´æ¥åˆå§‹åŒ–
+	//ConvertTo ct2 = c;			//æ‹·è´æ„é€ åˆå§‹åŒ– ç¼–è¯‘å¤±è´¥
+	ConvertTo ct3 = static_cast<ConvertTo>(c); //ç›´æ¥å¼ºåˆ¶è½¬æ¢
+	//FunCon(c);	                    //æ‹·è´æ„é€ åˆå§‹åŒ–å¤±è´¥
 
 
 	people name_12 = { { "tom", boy }, { "lily", girl }, { "kuku", boy } };
 	FunInit({ 1, 2 });
-	FunInit({});       //¿ÕÁĞ±í
+	FunInit({});       //ç©ºåˆ—è¡¨
 	TestInitData();
 
 	///////////////////////////////////////////////

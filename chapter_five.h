@@ -15,7 +15,7 @@
 #include <set>
 namespace Five
 {
-	//C++11ÖĞ Ç¿ÀàĞÍÃ¶¾Ù  
+	//C++11ä¸­ å¼ºç±»å‹æšä¸¾
 	enum class Type: char
 	{
 		General = 1,
@@ -24,7 +24,7 @@ namespace Five
 		Heavy
 	};
 
-	//±àÒëÊ±³£Á¿
+	//ç¼–è¯‘æ—¶å¸¸é‡
 	constexpr int GetConst()
 	{
 		return 1;
@@ -35,7 +35,7 @@ namespace Five
 		return 1;
 	}
 
-	//³£Á¿±í´ïÊ½º¯ÊıÒªÇóº¯ÊıÌåÖĞÖ»ÓĞÒ»ÌõÓï¾ä dataº¯ÊıÎŞ·¨Í¨¹ı±àÒë
+	//å¸¸é‡è¡¨è¾¾å¼å‡½æ•°è¦æ±‚å‡½æ•°ä½“ä¸­åªæœ‰ä¸€æ¡è¯­å¥ dataå‡½æ•°æ— æ³•é€šè¿‡ç¼–è¯‘
 	/*
 	constexpr int data()
 	{
@@ -57,17 +57,17 @@ namespace Five
 
 		}
 
-		constexpr int GetYear()
+		constexpr int GetYear() const
 		{
 			return year;
 		}
 
-		constexpr int GetMonth()
+		constexpr int GetMonth() const
 		{
 			return month;
 		}
 
-		constexpr int GetDay()
+		constexpr int GetDay() const
 		{
 			return day;
 		}
@@ -93,24 +93,24 @@ namespace Five
 
 
 
-	//±ä³¤²ÎÊıÄ£°å
+	//å˜é•¿å‚æ•°æ¨¡æ¿
 	template<int...A>
 	class NonTypeTemplate
 	{
 
 	};
-	//ÊµÀı»¯
+	//å®ä¾‹åŒ–
 	NonTypeTemplate<1, 0, 3> vint;
 
-	//ArgsÊÇÒ»¸öÄ£°å²ÎÊı°ü±íÊ¾0¸ö»òÕß¶à¸öÄ£°åÀàĞÍ²ÎÊı
-	//restº¯Êı²ÎÊı°ü ±íÊ¾0¸ö»òÕß¶à¸öº¯Êı²ÎÊı
+	//Argsæ˜¯ä¸€ä¸ªæ¨¡æ¿å‚æ•°åŒ…è¡¨ç¤º0ä¸ªæˆ–è€…å¤šä¸ªæ¨¡æ¿ç±»å‹å‚æ•°
+	//restå‡½æ•°å‚æ•°åŒ… è¡¨ç¤º0ä¸ªæˆ–è€…å¤šä¸ªå‡½æ•°å‚æ•°
 	template <typename T, typename... Args>
 	void foo(const T& t, const Args& ... rest)
 	{
-		std::cout << sizeof ...(Args) << endl;	  //²ÎÊıÀàĞÍµÄÊıÄ¿
-		std::cout << sizeof ...(rest) << endl;	  //º¯Êı²ÎÊıµÄÊıÄ¿			ss
+		std::cout << sizeof ...(Args) << endl;	  //å‚æ•°ç±»å‹çš„æ•°ç›®
+		std::cout << sizeof ...(rest) << endl;	  //å‡½æ•°å‚æ•°çš„æ•°ç›®			ss
 	}
-	
+
 	template<typename T>
 	ostream& print(ostream& os, const T& t)
 	{
@@ -122,28 +122,28 @@ namespace Five
 	{
 		os << t << ", ";
 		return print(os, rest...);
-	}	
+	}
 
 	void TestChaperFive()
 	{
-		
-		Type t = Type::Heavy;
-//		t = General;   //±àÒë²»Í¨¹ı ±ØĞëÊ¹ÓÃÇ¿ÀàĞÍÃû³Æ
 
-		//C++11ÖÇÄÜÖ¸ÕëµÄÊ¹ÓÃ
-		unique_ptr<int> up1(new int(11)); //ÎŞ·¨¸´ÖÆµÄunique_ptr
-//		unique_ptr<int> up2 = up1;        //²»ÄÜÍ¨¹ı±àÒë
-		unique_ptr<int> up3 = move(up1);  //Ä¿Ç°up3 ÊÇÊı¾İÎ¨Ò»µÄÖÇÄÜÖ¸Õë
+		Type t = Type::Heavy;
+//		t = General;   //ç¼–è¯‘ä¸é€šè¿‡ å¿…é¡»ä½¿ç”¨å¼ºç±»å‹åç§°
+
+		//C++11æ™ºèƒ½æŒ‡é’ˆçš„ä½¿ç”¨
+		unique_ptr<int> up1(new int(11)); //æ— æ³•å¤åˆ¶çš„unique_ptr
+//		unique_ptr<int> up2 = up1;        //ä¸èƒ½é€šè¿‡ç¼–è¯‘
+		unique_ptr<int> up3 = move(up1);  //ç›®å‰up3 æ˜¯æ•°æ®å”¯ä¸€çš„æ™ºèƒ½æŒ‡é’ˆ
 		cout << *up3 << endl;
 		/*
-		ÔËĞĞÊ±´íÎó
+		è¿è¡Œæ—¶é”™è¯¯
 		cout << *up1 << endl;
 		*/
 		up3.reset();
 
-		//ÏÂÃæ±ØĞëÊ¹ÓÃ±àÒë³£Á¿£¬¶ÔÓÚÔËĞĞ³£Á¿±àÒë²»Í¨¹ı
+		//ä¸‹é¢å¿…é¡»ä½¿ç”¨ç¼–è¯‘å¸¸é‡ï¼Œå¯¹äºè¿è¡Œå¸¸é‡ç¼–è¯‘ä¸é€šè¿‡
 		int arr[GetConst()] = { 0 };
-		enum 
+		enum
 		{
 			e1 = GetConst(),
 			e2
@@ -170,15 +170,15 @@ namespace Five
 
 
 
-	//±ä³¤º¯ÊıÄ£°åÊµÀı
+	//å˜é•¿å‡½æ•°æ¨¡æ¿å®ä¾‹
 	template<typename...Args>
 	void print_out(Args ... rest)
 	{
-		//·Ç6²ÎÊıÆ«ÌØ»¯°æ±¾Ä¬ÈÏassert
+		//é6å‚æ•°åç‰¹åŒ–ç‰ˆæœ¬é»˜è®¤assert
 		assert(false);
 	}
 
-	//×ª»¯Îª6¸ö²ÎÊıµÄ°æ±¾
+	//è½¬åŒ–ä¸º6ä¸ªå‚æ•°çš„ç‰ˆæœ¬
 	void print_out(int a1, int a2, int a3, int a4, int a5, int a6)
 	{
 		cout << a1 << ", " << a2 << ", " << a3 << "," << a4 << ", " << a5 << ", " << a6 << endl;
@@ -228,7 +228,7 @@ namespace Five
 	class TestTraits
 	{
 	public:
-		typedef	T value_type;     //ÄÚÇ¶ÀàĞÍÉùÃ÷
+		typedef	T value_type;     //å†…åµŒç±»å‹å£°æ˜
 		TestTraits(T* p = nullptr) : ptr(p)
 		{
 
@@ -270,7 +270,7 @@ namespace Five
 		Out(sizeof...(args), std::forward<Args>(args)...);
 	}
 
-	//Ä£°å
+	//æ¨¡æ¿
 	template <typename Tp, typename Ref, typename Ptr>
 	struct TestOp
 	{
@@ -280,7 +280,7 @@ namespace Five
 			cur = nullptr;
 		}
 		Tp* cur;
-		
+
 		inline bool operator==(const TestOp& __y)
 		{
 			cout << "inside operator1" << endl;
@@ -293,7 +293,7 @@ namespace Five
 			cout << "inside operator2" << endl;
 			return this->cur == __y.cur;
 		}
-		
+
 	};
 	template<typename _Tp, typename _Ref, typename _Ptr>
 	inline bool operator==(const TestOp<_Tp, _Ref, _Ptr>& x, const TestOp<_Tp, _Ref, _Ptr>& y)
@@ -308,7 +308,7 @@ namespace Five
 		cout << "outside operator2" << endl;
 		return true;
 	}
-	//·µ»ØÖµÇ°ÃæµÄtypename²»ÄÜÊ¡È¥
+	//è¿”å›å€¼å‰é¢çš„typenameä¸èƒ½çœå»
 	template<typename _Tp, typename _RefL, typename _PtrL, typename _RefR, typename _PtrR>
 	inline typename TestOp<_Tp, _RefL, _PtrL>::difference_type operator-(const TestOp<_Tp, _RefL, _PtrL>& x, const TestOp<_Tp, _RefR, _PtrR>& y)
 	{
@@ -326,23 +326,23 @@ namespace Five
 
 		TestTraits<int*>::value_type ac;
 
-		//¹ØÓÚÓÒÖµ
+		//å…³äºå³å€¼
 		int rr0 = 34;
 		int &&rr1 = 42;
 		int &rr2 = rr0;
 		int &&rr3 = std::move(rr2);
 		cout << rr2 << endl;
 
-		//¹ØÓÚnewµÄÊ¹ÓÃ
-		//1. ÉêÇë¿Õ¼ä µ÷ÓÃ¹¹Ôìº¯Êı
+		//å…³äºnewçš„ä½¿ç”¨
+		//1. ç”³è¯·ç©ºé—´ è°ƒç”¨æ„é€ å‡½æ•°
 		TestNew* p_new = new TestNew(9);
 
-		//2.½ö½ö¸³ÖµÓÃ£¬µ÷ÓÃ¹¹Ôìº¯Êı 
+		//2.ä»…ä»…èµ‹å€¼ç”¨ï¼Œè°ƒç”¨æ„é€ å‡½æ•°
 		void* p_new1 = malloc(sizeof(TestNew));
 		::new (static_cast<void*>(p_new1)) TestNew(100);
 		free(p_new1);
-		
-		//3.½ö½öÓÃÓÚÉêÇë¿Õ¼ä
+
+		//3.ä»…ä»…ç”¨äºç”³è¯·ç©ºé—´
 		TestNew* start_free = static_cast<TestNew*>(::operator new(100));
 		delete start_free;
 
@@ -361,7 +361,7 @@ namespace Five
 		std::vector<int> ivect = { 1, 2, 3, 3, 67 };
 		cout << ivect.max_size() << endl;
 		cout << sizeof(nullptr) << endl;
-		cout << sizeof(nullptr_t) << endl;				
+		cout << sizeof(nullptr_t) << endl;
 		nullptr_t my_null;
 		cout << &my_null << endl;
 
@@ -370,12 +370,12 @@ namespace Five
 		int boys = 3;
 		auto totalChild = [](int x, int y) -> int{ return x + y; };
 		cout << totalChild(girls, boys) << endl;
-		//×î¼òµ¥µÄlambdaº¯Êı
-		[]{};
+		//æœ€ç®€å•çš„lambdaå‡½æ•°
+		//[]{};
 		auto totalChild1 = [girls, &boys]() ->int{return girls + boys; };
 		cout << totalChild1() << endl;
 
-		//·Âº¯Êı
+		//ä»¿å‡½æ•°
 		struct Functor
 		{
 			int operator()(int x, int y)
@@ -448,6 +448,3 @@ namespace Five
 	}
 
 }
-
-
-

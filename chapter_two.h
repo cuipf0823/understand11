@@ -16,7 +16,7 @@ struct TestMacro
 };
 
 /*
-*	±ä³¤²ÎÊıºêµÄÊ¹ÓÃ
+*	å˜é•¿å‚æ•°å®çš„ä½¿ç”¨
 */
 #define LOG(...) \
 { \
@@ -27,22 +27,22 @@ struct TestMacro
 
 void macro()
 {
-	//C99ÖĞ°üº¬µÄ£¬C++11¼Ì³ĞÏÂÀ´
-	cout << "Standard Clib: " << __STDC_HOSTED__ << endl; //ÊÇ·ñ°üº¬ÍêÕûµÄC¿â 1°üº¬
-	cout << "Standard C: " << __STDC__ << endl;			  //±àÒëÆ÷µÄÊµÏÖÊÇ·ñºÍC±ê×¼Ò»Ñù
-	cout << "ISO/IEC " << __STDC_ISO_10646__ << endl;	  //±àÒë»·¾³·ûºÏµÄÄ³¸ö°æ±¾µÄISO/IECµÄ±ê×¼
+	//C99ä¸­åŒ…å«çš„ï¼ŒC++11ç»§æ‰¿ä¸‹æ¥
+	cout << "Standard Clib: " << __STDC_HOSTED__ << endl; //æ˜¯å¦åŒ…å«å®Œæ•´çš„Cåº“ 1åŒ…å«
+	cout << "Standard C: " << __STDC__ << endl;			  //ç¼–è¯‘å™¨çš„å®ç°æ˜¯å¦å’ŒCæ ‡å‡†ä¸€æ ·
+	//cout << "ISO/IEC " << __STDC_ISO_10646__ << endl;	  //ç¼–è¯‘ç¯å¢ƒç¬¦åˆçš„æŸä¸ªç‰ˆæœ¬çš„ISO/IECçš„æ ‡å‡†
 
-	//´òÓ¡º¯ÊıÃû
+	//æ‰“å°å‡½æ•°å
 	cout << __func__ << endl;
 	cout << __FUNCTION__ << endl;
 
-	//C++11ÔÊĞí__func__ÔËÓÃµ½ÀàºÍ½á¹¹ÌåÖĞ
+	//C++11å…è®¸__func__è¿ç”¨åˆ°ç±»å’Œç»“æ„ä½“ä¸­
 	TestMacro tm;
 	cout << tm.name << endl;
 	int x = 3;
 	LOG("x = %d", x);
 
-	//long longÀàĞÍ
+	//long longç±»å‹
 	long long ll_min = LLONG_MIN;
 	long long ll_max = LLONG_MAX;
 	unsigned long long ull_max = ULLONG_MAX;
@@ -61,7 +61,7 @@ enum FeatureSupports
 };
 
 /*
-*	×Ô¶¨ÒåÊµÏÖassert_static
+*	è‡ªå®šä¹‰å®ç°assert_static
 */
 #define assert_static(e) \
 do\
@@ -71,7 +71,7 @@ do\
 
 
 /*
-*  Òì³£´¦Àí
+*  å¼‚å¸¸å¤„ç†
 */
 void Throw() { throw 1; }
 
@@ -80,17 +80,17 @@ void NoBlockThrow()
 	Throw();
 }
 
-//C++11 noexecptĞŞÊÎµÄº¯ÊıÅ×³öÒì³££¬±àÒëÆ÷¿ÉÒÔÑ¡ÔñÖ±½ÓÊ¹ÓÃstd::terminate()º¯ÊıÀ´ÖÕÖ¹³ÌĞòµÄÔËĞĞ£»
-//Õâ±È»ùÓÚÒì³£´¦Àí»úÖÆµÄthrowÔÚĞ§ÂÊÉÏ¸ßÒ»Ğ©
+//C++11 noexecptä¿®é¥°çš„å‡½æ•°æŠ›å‡ºå¼‚å¸¸ï¼Œç¼–è¯‘å™¨å¯ä»¥é€‰æ‹©ç›´æ¥ä½¿ç”¨std::terminate()å‡½æ•°æ¥ç»ˆæ­¢ç¨‹åºçš„è¿è¡Œï¼›
+//è¿™æ¯”åŸºäºå¼‚å¸¸å¤„ç†æœºåˆ¶çš„throwåœ¨æ•ˆç‡ä¸Šé«˜ä¸€äº›
 
-//void excpt_func() noexcept(³£Á¿±í´ïÊ½) ³£Á¿±í´ïÊ½ == true±íÊ¾²»»áÅ×³öÒì³£ ==falseÅ×³öÒì³£
+//void excpt_func() noexcept(å¸¸é‡è¡¨è¾¾å¼) å¸¸é‡è¡¨è¾¾å¼ == trueè¡¨ç¤ºä¸ä¼šæŠ›å‡ºå¼‚å¸¸ ==falseæŠ›å‡ºå¼‚å¸¸
 void BlockThrow() noexcept
 {
 	//Throw();
 }
 
 /*
-*  ´¦ÓÚ°²È« C++11±ê×¼ÖĞÎö¹¹Ä¬ÈÏÊÇnoexcept(ture),¿ÉÒÔ×èÖ¹Òì³£µÄÀ©É¢
+*  å¤„äºå®‰å…¨ C++11æ ‡å‡†ä¸­ææ„é»˜è®¤æ˜¯noexcept(ture),å¯ä»¥é˜»æ­¢å¼‚å¸¸çš„æ‰©æ•£
 */
 struct A
 {
@@ -157,7 +157,7 @@ int test_except()
 		cout << "caught funC" << endl;
 	}
 
-	//²»Å×³öÒì³££¬×èÖ¹ÁËÒì³£µÄÀ©É¢
+	//ä¸æŠ›å‡ºå¼‚å¸¸ï¼Œé˜»æ­¢äº†å¼‚å¸¸çš„æ‰©æ•£
 
 	try
 	{
@@ -170,17 +170,17 @@ int test_except()
 }
 
 /*
-*  C++11ÖĞ±äÁ¿µÄ³õÊ¼»¯
+*  C++11ä¸­å˜é‡çš„åˆå§‹åŒ–
 */
 struct Init
 {
 	int a = 1;
 	double b{ 1.2 };
-	//std::string str1("abc");  //±àÒë²»Í¨¹ı
+	//std::string str1("abc");  //ç¼–è¯‘ä¸é€šè¿‡
 };
 
 /*
-*	·Ç¾²Ì¬³ÉÔ±µÄsizeof
+*	éé™æ€æˆå‘˜çš„sizeof
 */
 
 struct People
@@ -193,42 +193,42 @@ public:
 void test_size_of()
 {
 	People p;
-	cout << sizeof(p.hand) << endl;	       //C++98 Í¨¹ı C++11 Í¨¹ı
-	cout << sizeof(People::all) << endl;   //C++98 Í¨¹ı C++11 Í¨¹ı
-	cout << sizeof(People::hand) << endl;  //C++98 ´íÎó C++11 Í¨¹ı
-	cout << sizeof(((People*)0)->hand) << endl; //C++98ÖĞ»ñÈ¡Ã»ÓĞÀàÊµÀıÀàµÄ·Ç¾²Ì¬³ÉÔ±´óĞ¡µÄ·½·¨
+	cout << sizeof(p.hand) << endl;	       //C++98 é€šè¿‡ C++11 é€šè¿‡
+	cout << sizeof(People::all) << endl;   //C++98 é€šè¿‡ C++11 é€šè¿‡
+	cout << sizeof(People::hand) << endl;  //C++98 é”™è¯¯ C++11 é€šè¿‡
+	cout << sizeof(((People*)0)->hand) << endl; //C++98ä¸­è·å–æ²¡æœ‰ç±»å®ä¾‹ç±»çš„éé™æ€æˆå‘˜å¤§å°çš„æ–¹æ³•
 }
 
 /*
-*	friendµÄÀ©Õ¹Ê¹ÓÃ
+*	friendçš„æ‰©å±•ä½¿ç”¨
 */
 
 class FriendTest;
 typedef FriendTest FT;
 class Expend1
 {
-	friend class FriendTest;    //C++98 Í¨¹ı C++11 Í¨¹ı
+	friend class FriendTest;    //C++98 é€šè¿‡ C++11 é€šè¿‡
 };
 class Expend2
 {
-	friend FriendTest;	        //C++98 Ê§°Ü C++11 Í¨¹ı
+	friend FriendTest;	        //C++98 å¤±è´¥ C++11 é€šè¿‡
 };
 class Expend3
 {
-	friend FT;				    //C++98 Ê§°Ü C++11 Í¨¹ı
+	friend FT;				    //C++98 å¤±è´¥ C++11 é€šè¿‡
 };
-//friend¿ÉÒÔÎªÀàÄ£°åÉùÃ÷ÓÑÔª
+//friendå¯ä»¥ä¸ºç±»æ¨¡æ¿å£°æ˜å‹å…ƒ
 template <typename T>
 class Expend4
 {
 	friend T;
 };
 
-Expend4<FriendTest> ef;		   //ÀàĞÍFriendTestÔÚÕâÀïÊÇExpend4µÄÓÑÔª
-Expend4<int> pi;			   //intÀàĞÍÄ£°å²ÎÊı£¬ÓÑÔªÉùÃ÷±»ºöÂÔ
+Expend4<FriendTest> ef;		   //ç±»å‹FriendTeståœ¨è¿™é‡Œæ˜¯Expend4çš„å‹å…ƒ
+Expend4<int> pi;			   //intç±»å‹æ¨¡æ¿å‚æ•°ï¼Œå‹å…ƒå£°æ˜è¢«å¿½ç•¥
 
 /*
-*	c++11ÖĞfinalºÍoverrideµÄÊ¹ÓÃ
+*	c++11ä¸­finalå’Œoverrideçš„ä½¿ç”¨
 */
 
 class Object
@@ -244,7 +244,7 @@ class Base : public Object
 
 class Derived : public Base
 {
-//	void func(); //ÎŞ·¨Í¨¹ı±àÒë
+//	void func(); //æ— æ³•é€šè¿‡ç¼–è¯‘
 };
 
 struct Base1
@@ -256,25 +256,25 @@ struct Base1
 struct DerivedMid: public Base1
 {
 	void Turing() override;	     //
-//	void VNeumann() override;	 //ÎŞ·¨Í¨¹ı±àÒë ²ÎÊı²»Ò»Ñù
+//	void VNeumann() override;	 //æ— æ³•é€šè¿‡ç¼–è¯‘ å‚æ•°ä¸ä¸€æ ·
 	void VNeumann(int g) override;
 };
 
 /*
-*	Ä£°åº¯ÊıµÄÄ¬ÈÏÄ£°å²ÎÊı
+*	æ¨¡æ¿å‡½æ•°çš„é»˜è®¤æ¨¡æ¿å‚æ•°
 */
 
 template<typename T1, typename T2 = int>
 class DefClass1;
 /*
 template<typename T1 = int, typename T2>
-class DefClass2;						  //±àÒë´íÎó
+class DefClass2;						  //ç¼–è¯‘é”™è¯¯
 */
 template<typename T, int i = 0>
 class DefClass3;
 /*
 template<int i = 0, typename T>
-class DefClass4;				           //±àÒë´íÎó
+class DefClass4;				           //ç¼–è¯‘é”™è¯¯
 */
 template<typename T1 = int, typename T2>
 void DefFunc(T1 a, T2 b);
@@ -282,7 +282,7 @@ template<int i = 0, typename T>
 void DefFunc(T a);
 
 /*
-	¾Ö²¿ºÍÄäÃûÀàĞÍ×÷Ä£°åÊµ²Î
+	å±€éƒ¨å’ŒåŒ¿åç±»å‹ä½œæ¨¡æ¿å®å‚
 */
 
 /*
@@ -292,9 +292,9 @@ template <typename T>
 void TempFun(T t){};
 
 struct A{ } a;
-struct {int i;} b; //bÎªÄäÃûÀàĞÍ±äÁ¿   
+struct {int i;} b; //bä¸ºåŒ¿åç±»å‹å˜é‡
 
-typedef struct {int i; } B;  //BÎªÄäÃûÀàĞÍ
+typedef struct {int i; } B;  //Bä¸ºåŒ¿åç±»å‹
 
 
 void test_template()
@@ -303,12 +303,12 @@ void test_template()
 	{
 
 	} c;
-	X<A> x1;		//C++98 Í¨¹ı C++11Í¨¹ı
-	X<B> x2;		//C++98 ´íÎó C++11Í¨¹ı
-	X<C> x3;		//C++98 ´íÎó C++11Í¨¹ı
-	TempFun(a);		//C++98 Í¨¹ı C++11Í¨¹ı
-	TempFun(b);		//C++98 ´íÎó C++11Í¨¹ı
-	TempFun(c);		//C++98 ´íÎó C++11Í¨¹ı
+	X<A> x1;		//C++98 é€šè¿‡ C++11é€šè¿‡
+	X<B> x2;		//C++98 é”™è¯¯ C++11é€šè¿‡
+	X<C> x3;		//C++98 é”™è¯¯ C++11é€šè¿‡
+	TempFun(a);		//C++98 é€šè¿‡ C++11é€šè¿‡
+	TempFun(b);		//C++98 é”™è¯¯ C++11é€šè¿‡
+	TempFun(c);		//C++98 é”™è¯¯ C++11é€šè¿‡
 }
 */
 class FuncBase;
@@ -351,7 +351,7 @@ int FuncBase::BaseAddFunc()
 	data.AddFuncClass(10, 20, this);
 }
 
-//²»°üº¬ÈÎºÎÈ±Ê¡¹¹Ôìº¯Êı
+//ä¸åŒ…å«ä»»ä½•ç¼ºçœæ„é€ å‡½æ•°
 class EquipmentPiece
 {
 public:
@@ -368,16 +368,16 @@ private:
 
 void TestEquipment()
 {
-//	EquipmentPiece bestpieces[10]; 	  //Ê§°Ü 
-//	EquipmentPiece* pieces = new EquipmentPiece[10]; //Ê§°Ü
+//	EquipmentPiece bestpieces[10]; 	  //å¤±è´¥
+//	EquipmentPiece* pieces = new EquipmentPiece[10]; //å¤±è´¥
 
-//½â¾ö·½·¨1:Ê¹ÓÃ·Ç¶ÑÊı×é½â¾ö
+//è§£å†³æ–¹æ³•1:ä½¿ç”¨éå †æ•°ç»„è§£å†³
 int id1 = 0;
 int id2 = 1;
 EquipmentPiece arry_pieces[2] = { EquipmentPiece(id1), EquipmentPiece(id2) };
 
-//½â¾ö·½·¨2: Ò»¸ö¸ü¼ÓÍ¨ÓÃµÄ½â¾ö·½·¨£¬Ê¹ÓÃÖ¸ÕëÊı×é´úÌæÒ»¸ö¶ÔÏóÊı×é
-//È±µã£º ±ØĞëÉ¾³ıÃ¿¸öÊı×éÀïÃ¿Ò»¸öÖ¸Õë£»Ôö¼ÓÁËÄÚ´æµÄÊ¹ÓÃÁ¿
+//è§£å†³æ–¹æ³•2: ä¸€ä¸ªæ›´åŠ é€šç”¨çš„è§£å†³æ–¹æ³•ï¼Œä½¿ç”¨æŒ‡é’ˆæ•°ç»„ä»£æ›¿ä¸€ä¸ªå¯¹è±¡æ•°ç»„
+//ç¼ºç‚¹ï¼š å¿…é¡»åˆ é™¤æ¯ä¸ªæ•°ç»„é‡Œæ¯ä¸€ä¸ªæŒ‡é’ˆï¼›å¢åŠ äº†å†…å­˜çš„ä½¿ç”¨é‡
 typedef EquipmentPiece* EquipmentPtr;
 EquipmentPtr pieces_ptr[10];
 EquipmentPtr* pieces_new = new EquipmentPtr[10];
@@ -386,14 +386,14 @@ for (int i = 0; i < 10; ++i)
 	pieces_new[i] = new EquipmentPiece(i);
 }
 
-//½â¾ö·½·¨3£ºÊ¹ÓÃplacement new·½·¨£»µ«ÊÇ±ØĞëÊÖ¶¯µ÷ÓÃÊı×é¶ÔÏóµÄÎö¹¹º¯Êı
+//è§£å†³æ–¹æ³•3ï¼šä½¿ç”¨placement newæ–¹æ³•ï¼›ä½†æ˜¯å¿…é¡»æ‰‹åŠ¨è°ƒç”¨æ•°ç»„å¯¹è±¡çš„ææ„å‡½æ•°
 void* rawmemory = operator new[](10 * sizeof(EquipmentPiece));
 EquipmentPiece* raw_pieces = static_cast<EquipmentPiece*>(rawmemory);
 for (int idx = 0; idx < 10; ++idx)
 {
 	::new (&raw_pieces[idx]) EquipmentPiece(idx);
 }
-	
+
 for (int i = 9; i >= 0; --i)
 {
 	raw_pieces[i].~EquipmentPiece();
@@ -408,7 +408,7 @@ void chapter_two()
 {
 	assert((SMAX - 1) == (C99 | ExtInt | SAssert | NoExcept));
 	assert_static((SMAX - 1) == (C99 | ExtInt | SAssert | NoExcept));
-	//C++11 ÖĞÒıÈëÁËstatic_assert ½ÓÊÕÁ½¸ö²ÎÊı£¬Ò»¸öÊÇ¶ÏÑÔ±í´ïÊÇ·µ»ØboolÖµ£¬Ò»¸öÊÇ¾¯¸æĞÅÏ¢
+	//C++11 ä¸­å¼•å…¥äº†static_assert æ¥æ”¶ä¸¤ä¸ªå‚æ•°ï¼Œä¸€ä¸ªæ˜¯æ–­è¨€è¡¨è¾¾æ˜¯è¿”å›boolå€¼ï¼Œä¸€ä¸ªæ˜¯è­¦å‘Šä¿¡æ¯
 	int a = 0;
 	int b = 0;
 	static_assert(sizeof(a) == sizeof(b), "the parameters should have same width");

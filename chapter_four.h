@@ -11,7 +11,7 @@ using namespace std;
 namespace Four
 {
 
-	//C++98ÖĞ ±àÒë²»Í¨¹ı£¬C++11±àÒëÍ¨¹ı C++11ÖĞ±àÒëÆ÷¿ÉÒÔÖÇÄÜµÄÅĞ¶Ï>>Ë«À¨ºÅ²»ÊÇÓÒÒÆ·ûºÅ
+	//C++98ä¸­ ç¼–è¯‘ä¸é€šè¿‡ï¼ŒC++11ç¼–è¯‘é€šè¿‡ C++11ä¸­ç¼–è¯‘å™¨å¯ä»¥æ™ºèƒ½çš„åˆ¤æ–­>>åŒæ‹¬å·ä¸æ˜¯å³ç§»ç¬¦å·
 	std::vector<int> int_vec;
 	const vector<int> v = static_cast<const vector<int>>(int_vec);
 
@@ -26,7 +26,7 @@ namespace Four
 	}
 
 	//decltype
-	//RTTIÔËĞĞÊ±ÀàĞÍÊ¶±ğ£¬»úÖÆ£ºÃ¿¸öÀàĞÍ²úÉúÒ»¸ötype_infoÀàĞÍµÄÊı¾İ£¬typeid¾Í»á·µ»Ø£¬³ÉÔ±nameÓÃÓÚ·µ»ØÀàĞÍµÄÃû×Ö£»
+	//RTTIè¿è¡Œæ—¶ç±»å‹è¯†åˆ«ï¼Œæœºåˆ¶ï¼šæ¯ä¸ªç±»å‹äº§ç”Ÿä¸€ä¸ªtype_infoç±»å‹çš„æ•°æ®ï¼Œtypeidå°±ä¼šè¿”å›ï¼Œæˆå‘˜nameç”¨äºè¿”å›ç±»å‹çš„åå­—ï¼›
 	class White {};
 	class Black {};
 	template<typename T1, typename T2>
@@ -41,7 +41,7 @@ namespace Four
 		Black b;
 		cout << typeid(a).name() << endl;
 		cout << typeid(b).name() << endl;
-		//C++11ÖĞÔö¼Óhash_code£¨ÀàĞÍµÄÎ¨Ò»¹şÏ£Öµ£©£¬ÓÃÓÚ±äÁ¿ÀàĞÍµÄ±È½Ï
+		//C++11ä¸­å¢åŠ hash_codeï¼ˆç±»å‹çš„å”¯ä¸€å“ˆå¸Œå€¼ï¼‰ï¼Œç”¨äºå˜é‡ç±»å‹çš„æ¯”è¾ƒ
 		White c;
 		bool a_b_same = (typeid(a).hash_code() == typeid(b).hash_code());
 		cout << "A and B ? " << (int)(a_b_same) << endl;
@@ -52,7 +52,7 @@ namespace Four
 		cout << typeid(j).name() << endl;
 
 	}
-	//decltypeÊ¹ÓÃ ¹æÔò
+	//decltypeä½¿ç”¨ è§„åˆ™
 	int i = 4;
 	int arr[5] = { 0 };
 	int *ptr = arr;
@@ -60,14 +60,14 @@ namespace Four
 	{
 		double d;
 	} s;
-	//ÓÒÖµÒıÓÃ
+	//å³å€¼å¼•ç”¨
 	int && RvalRef();
 	const bool Func(int);
 	void Overloaded(int);
 	void Overloaded(char);
 
 
-	//decltypeÅäºÏº¯ÊıÄ£°å ×·×Ù·µ»ØÀàĞÍ
+	//decltypeé…åˆå‡½æ•°æ¨¡æ¿ è¿½è¸ªè¿”å›ç±»å‹
 	template<typename T1, typename T2>
 	auto TemSum(const T1& t1, const T2& t2) -> decltype(t1 + t2)
 	{
@@ -87,47 +87,47 @@ namespace Four
 
 	void TestChaperFour()
 	{
-		//auto¹Ø¼ü×Ö ÀàĞÍÍÆµ¼
+		//autoå…³é”®å­— ç±»å‹æ¨å¯¼
 		auto name = "world\n";
 		cout << "hello " << name << endl;
 		int x = 1;
 		int* y = &x;
 
-		auto * a = &x; //int* 
+		auto * a = &x; //int*
 		auto & b = x;  //int&
 		auto c = y;    //int*
 		auto * d = y;  //int*
-		//auto * e = &foo(); //Ê§°Ü Ö¸Õë²»ÄÜÖ¸ÏòÒ»¸öÁÙÊ±±äÁ¿
-		//auto & f = foo();  //±àÒëÊ§°Ü nonconstµÄ×óÖµÒıÓÃ²»ÄÜºÍÒ»¸öÁÙÊ±±äÁ¿°ó¶¨
+		//auto * e = &foo(); //å¤±è´¥ æŒ‡é’ˆä¸èƒ½æŒ‡å‘ä¸€ä¸ªä¸´æ—¶å˜é‡
+		//auto & f = foo();  //ç¼–è¯‘å¤±è´¥ nonconstçš„å·¦å€¼å¼•ç”¨ä¸èƒ½å’Œä¸€ä¸ªä¸´æ—¶å˜é‡ç»‘å®š
 		auto & g = bar();
 
 		test_decltype();
 		/*
-			¹æÔò1£º µ¥¸ö±ê¼Ç·û±í´ïÊ½ÒÔ¼°·ÃÎÊÀà³ÉÔ± ÍÆµ¼Îª±¾ÀàĞÍ
+			è§„åˆ™1ï¼š å•ä¸ªæ ‡è®°ç¬¦è¡¨è¾¾å¼ä»¥åŠè®¿é—®ç±»æˆå‘˜ æ¨å¯¼ä¸ºæœ¬ç±»å‹
 			*/
-		decltype(arr) var1;  //int[5] ±ê¼Ç·û±í´ïÊ½
+		decltype(arr) var1;  //int[5] æ ‡è®°ç¬¦è¡¨è¾¾å¼
 		decltype(ptr) var2;  //int*
 		decltype(s.d) var3;  //double
-		//	decltype(Overloaded) var4; //±àÒëÊ§°Ü ÒòÎªÖØÔØ
+		//	decltype(Overloaded) var4; //ç¼–è¯‘å¤±è´¥ å› ä¸ºé‡è½½
 
 		/*
-			¹æÔò2£º½«ÍöÖµ ÍÆµ¼ÎªÀàĞÍµÄÓÒÖµÒıÓÃ
+			è§„åˆ™2ï¼šå°†äº¡å€¼ æ¨å¯¼ä¸ºç±»å‹çš„å³å€¼å¼•ç”¨
 			*/
 		decltype(RvalRef()) var6 = 1; //int&&
 		/*
-			¹æÔò3£º×óÖµ£¬ÍÆµ¼ÎªÀàĞÍµÄÒıÓÃ
+			è§„åˆ™3ï¼šå·¦å€¼ï¼Œæ¨å¯¼ä¸ºç±»å‹çš„å¼•ç”¨
 			*/
-		decltype(true ? i : i) var7 = i; //int& ÈıÔªÔËËã·û·µ»ØÒ»¸öiµÄ×óÖµ
-		decltype((i)) var8 = i;          //int& ´øÔ²À¨ºÅµÄ×óÖµ
-		decltype(++i) var9 = i;
+		decltype(true ? i : i) var7 = i; //int& ä¸‰å…ƒè¿ç®—ç¬¦è¿”å›ä¸€ä¸ªiçš„å·¦å€¼
+		decltype((i)) var8 = i;          //int& å¸¦åœ†æ‹¬å·çš„å·¦å€¼
+		//decltype(++i) var9 = i;
 		decltype(arr[3]) var10 = i;
 		decltype(*ptr) var11 = i;
 		decltype("lval") var12 = "lval"; //const char(&)[9]
 		/*
-			¹æÔò4£ºÒÔÉÏ¶¼²»ÊÇ£¬ÍÆµ¼Îª±¾ÀàĞÍ
+			è§„åˆ™4ï¼šä»¥ä¸Šéƒ½ä¸æ˜¯ï¼Œæ¨å¯¼ä¸ºæœ¬ç±»å‹
 		*/
 		decltype(1) var13;    //int
-		decltype(i++) var14;  //int i++·µ»ØÓÒÖµ
+		//decltype(i++) var14;  //int i++è¿”å›å³å€¼
 
 
 		auto w = 3;
@@ -160,7 +160,7 @@ namespace Four
 
 		for (const auto& e : vec_for)
 		{
-			cout << e << endl;	 //eÊÇ½âÒıÓÃºóµÄ¶ÔÏó
+			cout << e << endl;	 //eæ˜¯è§£å¼•ç”¨åçš„å¯¹è±¡
 		}
 		cout << endl;
 
@@ -175,6 +175,3 @@ namespace Four
 
 
 }
-
-
-

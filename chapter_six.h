@@ -65,7 +65,7 @@ T&& TestIdentity(T&& t)
 }
 
 
-//²âÊÔunordered_mapÏà¹Ø²Ù×÷
+//æµ‹è¯•unordered_mapç›¸å…³æ“ä½œ
 typedef std::unordered_map<int, int> HashMap;
 HashMap info_hash_map;
 std::map<int, int> info_map;
@@ -120,7 +120,7 @@ MutexInfoList mutexs_;
 
 void test_mutex()
 {
-	//init ÖªµÀ uid scene_id, mutex_id
+	//init çŸ¥é“ uid scene_id, mutex_id
 	uint32_t uid = 100999;
 	uint32_t scene_id = 2;
 	uint32_t mutex_id = 1;
@@ -141,7 +141,7 @@ void test_mutex()
 	iter->iter2 = scene_mutex_.begin();
 
 
-	//²åÈëµÚ¶ş¸öÔªËØ
+	//æ’å…¥ç¬¬äºŒä¸ªå…ƒç´ 
 	info.mutex_id = mutex_id + 100;
 	info.scene_id = scene_id + 100;
 	info.uid = uid + 100;
@@ -166,7 +166,7 @@ void test_mutex()
 		cout << "mutex_id: " << list_iter->mutex_id << endl;
 	}
 
-	//É¾³ıÔªËØ
+	//åˆ é™¤å…ƒç´ 
 	MutexTuple::iterator it = user_scene_.find(uid);
 	auto list_iter = it->second.begin()->second;
 	user_scene_.erase(list_iter->iter1);
@@ -234,9 +234,9 @@ void TestChaperSix()
 	print_queue(q3);
 
 
-	//Ö¸ÏòÕûĞÍÖ¸ÕëµÄÖ¸Õë
+	//æŒ‡å‘æ•´å‹æŒ‡é’ˆçš„æŒ‡é’ˆ
 	int a[5] = { 1, 2, 3, 4, 5 };
-	int *p = a;  //µÈĞ§ÓÚ int *p = &a[0]
+	int *p = a;  //ç­‰æ•ˆäº int *p = &a[0]
 	int** point = &p;
 	assert(*point == p);
 	assert(**point == a[0]);
@@ -315,40 +315,40 @@ void TestChaperSix()
 	}
 	std::string str("66666");
 	std::string& str_lref = str;
-	std::string&& str_rref = std::move(str_lref);  //Ê¹ÓÃÊ±ºòÒÀÈ»ÊÇ ×óÖµ
+	std::string&& str_rref = std::move(str_lref);  //ä½¿ç”¨æ—¶å€™ä¾ç„¶æ˜¯ å·¦å€¼
 	std::string&& str_rref1 = std::move(str);
-	std::string&& str_rref2 = static_cast<std::string&&>(str); //µÈ¼ÛÓÚÊ¹ÓÃstd::move
+	std::string&& str_rref2 = static_cast<std::string&&>(str); //ç­‰ä»·äºä½¿ç”¨std::move
 	
-	std::string&& str2 = TestIdentity<std::string>(std::move(str));	 //T£º string	´«²ÎÊı£ºÓÒÖµÒıÓÃ	·µ»Ø£ºÓÒÖµÒıÓÃ
-	std::string& str3 = TestIdentity<std::string&>(str_lref);        //T:  string& 	´«²ÎÊı£º×óÖµÒıÓÃ£¨ÒıÓÃÕÛµş£©·µ»Ø£º×óÖµÒıÓÃ
-	std::string&& str4 = TestIdentity<std::string&&>(std::move(str));//T:  string&&  ´«²ÎÊı£ºÓÒÖµÒıÓÃ ·µ»Ø£ºÓÒÖµÒıÓÃ 
-	std::string& str5 = TestIdentity(str4);							 //T:  string&  ´«²ÎÊı£º×óÖµÒıÓÃ ·µ»Ø£º×óÖµÒıÓÃ
+	std::string&& str2 = TestIdentity<std::string>(std::move(str));	 //Tï¼š string	ä¼ å‚æ•°ï¼šå³å€¼å¼•ç”¨	è¿”å›ï¼šå³å€¼å¼•ç”¨
+	std::string& str3 = TestIdentity<std::string&>(str_lref);        //T:  string& 	ä¼ å‚æ•°ï¼šå·¦å€¼å¼•ç”¨ï¼ˆå¼•ç”¨æŠ˜å ï¼‰è¿”å›ï¼šå·¦å€¼å¼•ç”¨
+	std::string&& str4 = TestIdentity<std::string&&>(std::move(str));//T:  string&&  ä¼ å‚æ•°ï¼šå³å€¼å¼•ç”¨ è¿”å›ï¼šå³å€¼å¼•ç”¨ 
+	std::string& str5 = TestIdentity(str4);							 //T:  string&  ä¼ å‚æ•°ï¼šå·¦å€¼å¼•ç”¨ è¿”å›ï¼šå·¦å€¼å¼•ç”¨
 
 	/*
-		tupleµÄÊ¹ÓÃ
+		tupleçš„ä½¿ç”¨
 	*/
 
-	//tupleµÄ³õÊ¼»¯
+	//tupleçš„åˆå§‹åŒ–
 	std::tuple<size_t, size_t, size_t> threeD; 
 	std::tuple<std::string, std::vector<double>, int, std::list<int>> someVal("constants", { 3.14, 2.78 }, 42, { 1, 2, 3, 4 });
-	//´ËÊ± itemÎª tuple<const char*, int, double>
+	//æ­¤æ—¶ itemä¸º tuple<const char*, int, double>
 	auto item = std::make_tuple("0-999-123-x", 2, 20.12);
 
-	//³ÉÔ±tuple³ÉÔ±·ÃÎÊ
+	//æˆå‘˜tupleæˆå‘˜è®¿é—®
 	auto book = std::get<0>(item);
 	auto cnt = std::get<1>(item);
 	auto price = std::get<2>(item);
 	std::cout << "book: " << book << " cnt: " << cnt << " price: " << price << std::endl;
 	//auto form = std::get<3>(item);
 
-	typedef decltype(item) Trans; //Trans ÊÇitemµÄÀàĞÍ£»
-	//·µ»ØTransÀàĞÍ¶ÔÏóÖĞ³ÉÔ±µÄÊıÁ¿
+	typedef decltype(item) Trans; //Trans æ˜¯itemçš„ç±»å‹ï¼›
+	//è¿”å›Transç±»å‹å¯¹è±¡ä¸­æˆå‘˜çš„æ•°é‡
 	std::cout << std::tuple_size<Trans>::value << endl;
-	//»ñÈ¡ÀàĞÍ cntÀàĞÍÓëitemÖĞµÚ¶ş¸ö³ÉÔ±ÏàÍ¬
+	//è·å–ç±»å‹ cntç±»å‹ä¸itemä¸­ç¬¬äºŒä¸ªæˆå‘˜ç›¸åŒ
 	std::tuple_element<1, Trans>::type cnt_type = std::get<1>(item);
-	//Ê¹ÓÃtuple·µ»Ø¶à¸öÖµ tuple³£¼ûÓÃÍ¾Ö®Ò»
+	//ä½¿ç”¨tupleè¿”å›å¤šä¸ªå€¼ tupleå¸¸è§ç”¨é€”ä¹‹ä¸€
 
-	//¶¨Òå±àÒëÊ±ÆÚµÄ³£Á¿
+	//å®šä¹‰ç¼–è¯‘æ—¶æœŸçš„å¸¸é‡
 	std::cout << "integal_constant: " << std::integral_constant<int, 5>::value << std::endl;
 	using one_type = std::integral_constant < int, 10 > ;
 	std::cout << one_type::value << endl;
@@ -357,7 +357,7 @@ void TestChaperSix()
 
 	};
 	std::cout << OneType::value << endl;
-	//±àÒëÊ±ÆÚµÄtrue ºÍ false
+	//ç¼–è¯‘æ—¶æœŸçš„true å’Œ false
 	using true_type = std::integral_constant < bool, true > ;
 	using false_type = std::integral_constant < bool, false > ;
 	std::cout << true_type::value << " " << false_type::value << endl;
